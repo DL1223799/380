@@ -33,3 +33,6 @@ INSERT INTO user_roles(username, role) VALUES ('samuel', 'ROLE_USER');
 
 INSERT INTO users VALUES ('marco', '{noop}marcopw');
 INSERT INTO user_roles(username, role) VALUES ('marco', 'ROLE_USER');
+
+INSERT INTO users VALUES ('hello', '{noop}hellopw');
+INSERT INTO user_roles(username, role) VALUES ('hello', 'ROLE_USER');
