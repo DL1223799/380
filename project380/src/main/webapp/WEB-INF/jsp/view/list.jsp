@@ -13,8 +13,8 @@
 <h2>Courses</h2>
 <security:authorize access="hasRole('ADMIN')">    
     <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
-</security:authorize>
 <a href="<c:url value="/course/create" />">Create a Course</a><br /><br />
+</security:authorize>
 <c:choose>
     <c:when test="${fn:length(courseDatabase) == 0}">
         <i>There are no courses in the system.</i>
