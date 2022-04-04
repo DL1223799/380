@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class TicketUser implements Serializable {
+public class CourseUser implements Serializable {
 
     @Id
     private String username;
@@ -24,10 +24,10 @@ public class TicketUser implements Serializable {
             cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRole> roles = new ArrayList<>();
 
-    public TicketUser() {
+    public CourseUser() {
     }
 
-    public TicketUser(String username, String password, String[] roles) {
+    public CourseUser(String username, String password, String[] roles) {
         this.username = username;
         this.password = "{noop}" + password;
         for (String role : roles) {

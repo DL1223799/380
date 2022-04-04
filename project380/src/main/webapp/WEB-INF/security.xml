@@ -38,7 +38,7 @@
 
     <context:annotation-config />
 
-    <b:bean id="ticketUserService" class="hkmu.comps380f.service.TicketUserService" />
+    <b:bean id="ticketUserService" class="hkmu.comps380f.service.CourseUserService" />
 
     <authentication-manager>
         <authentication-provider user-service-ref="ticketUserService" />

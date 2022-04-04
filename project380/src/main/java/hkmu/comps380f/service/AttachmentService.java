@@ -14,6 +14,6 @@ public class AttachmentService {
 
     @Transactional
     public Attachment getAttachment(long ticketId, String name) {
-        return attachmentRepo.findByTicketIdAndName(ticketId, name);
+        return attachmentRepo.findByCourseIdAndName(ticketId, name);
     }
 }

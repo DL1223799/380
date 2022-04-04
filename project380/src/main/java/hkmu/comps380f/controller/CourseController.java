@@ -1,11 +1,11 @@
 package hkmu.comps380f.controller;
 
 import hkmu.comps380f.exception.AttachmentNotFound;
-import hkmu.comps380f.exception.TicketNotFound;
+import hkmu.comps380f.exception.CourseNotFound;
 import hkmu.comps380f.model.Attachment;
-import hkmu.comps380f.model.Ticket;
+import hkmu.comps380f.model.Course;
 import hkmu.comps380f.service.AttachmentService;
-import hkmu.comps380f.service.TicketService;
+import hkmu.comps380f.service.CourseService;
 import hkmu.comps380f.view.DownloadingView;
 import java.io.IOException;
 import java.security.Principal;
@@ -25,10 +25,10 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/ticket")
-public class TicketController {
+public class CourseController {
 
     @Autowired
-    private TicketService ticketService;
+    private CourseService ticketService;
 
     @Autowired
     private AttachmentService attachmentService;
@@ -36,7 +36,7 @@ public class TicketController {
     // Controller methods, Form object, ...
     @GetMapping({"", "/list"})
     public String list(ModelMap model) {
-        model.addAttribute("ticketDatabase", ticketService.getTickets());
+        model.addAttribute("ticketDatabase", ticketService.getCourses());
         return "list";
     }
 
@@ -79,14 +79,14 @@ public class TicketController {
 
     @PostMapping("/create")
     public String create(Form form, Principal principal) throws IOException {
-        long ticketId = ticketService.createTicket(principal.getName(),
+        long ticketId = ticketService.createCourse(principal.getName(),
                 form.getSubject(), form.getBody(), form.getAttachments());
         return "redirect:/ticket/view/" + ticketId;
     }
 
     @GetMapping("/view/{ticketId}")
     public String view(@PathVariable("ticketId") long ticketId, ModelMap model) {
-        Ticket ticket = ticketService.getTicket(ticketId);
+        Course ticket = ticketService.getCourse(ticketId);
         if (ticket == null) {
             return "redirect:/ticket/list";
         }
@@ -116,7 +116,7 @@ public class TicketController {
     @GetMapping("/edit/{ticketId}")
     public ModelAndView showEdit(@PathVariable("ticketId") long ticketId,
             Principal principal, HttpServletRequest request) {
-        Ticket ticket = ticketService.getTicket(ticketId);
+        Course ticket = ticketService.getCourse(ticketId);
         if (ticket == null
                 || (!request.isUserInRole("ROLE_ADMIN")
                 && !principal.getName().equals(ticket.getCustomerName()))) {
@@ -137,22 +137,22 @@ public class TicketController {
     @PostMapping("/edit/{ticketId}")
     public String edit(@PathVariable("ticketId") long ticketId, Form form,
             Principal principal, HttpServletRequest request)
-            throws IOException, TicketNotFound {
-        Ticket ticket = ticketService.getTicket(ticketId);
+            throws IOException, CourseNotFound {
+        Course ticket = ticketService.getCourse(ticketId);
         if (ticket == null
                 || (!request.isUserInRole("ROLE_ADMIN")
                 && !principal.getName().equals(ticket.getCustomerName()))) {
             return "redirect:/ticket/list";
         }
 
-        ticketService.updateTicket(ticketId, form.getSubject(),
+        ticketService.updateCourse(ticketId, form.getSubject(),
                 form.getBody(), form.getAttachments());
         return "redirect:/ticket/view/" + ticketId;
     }
 
     @GetMapping("/delete/{ticketId}")
-    public String deleteTicket(@PathVariable("ticketId") long ticketId)
-            throws TicketNotFound {
+    public String deleteCourse(@PathVariable("ticketId") long ticketId)
+            throws CourseNotFound {
         ticketService.delete(ticketId);
         return "redirect:/ticket/list";
     }

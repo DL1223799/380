@@ -1,7 +1,7 @@
 package hkmu.comps380f.service;
 
-import hkmu.comps380f.dao.TicketUserRepository;
-import hkmu.comps380f.model.TicketUser;
+import hkmu.comps380f.dao.CourseUserRepository;
+import hkmu.comps380f.model.CourseUser;
 import hkmu.comps380f.model.UserRole;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,22 +15,22 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TicketUserService implements UserDetailsService {
+public class CourseUserService implements UserDetailsService {
 
     @Resource
-    TicketUserRepository ticketUserRepo;
+    CourseUserRepository courseUserRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        TicketUser ticketUser = ticketUserRepo.findById(username).orElse(null);
-        if (ticketUser == null) {
+        CourseUser courseUser = courseUserRepo.findById(username).orElse(null);
+        if (courseUser == null) {
             throw new UsernameNotFoundException("User '" + username + "' not found.");
         }
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (UserRole role : ticketUser.getRoles()) {
+        for (UserRole role : courseUser.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
-        return new User(ticketUser.getUsername(), ticketUser.getPassword(), authorities);
+        return new User(courseUser.getUsername(), courseUser.getPassword(), authorities);
     }
 }

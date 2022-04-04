@@ -1,7 +1,7 @@
 package hkmu.comps380f.controller;
 
-import hkmu.comps380f.dao.TicketUserRepository;
-import hkmu.comps380f.model.TicketUser;
+import hkmu.comps380f.dao.CourseUserRepository;
+import hkmu.comps380f.model.CourseUser;
 import java.io.IOException;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
@@ -16,10 +16,10 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/user")
-public class TicketUserController {
+public class CourseUserController {
 
     @Resource
-    TicketUserRepository ticketUserRepo;
+    CourseUserRepository ticketUserRepo;
 
     @GetMapping({"", "/list"})
     public String list(ModelMap model) {
@@ -66,14 +66,14 @@ public class TicketUserController {
 
     @PostMapping("/create")
     public View create(Form form) throws IOException {
-        TicketUser user = new TicketUser(form.getUsername(),
+        CourseUser user = new CourseUser(form.getUsername(),
                 form.getPassword(), form.getRoles());
         ticketUserRepo.save(user);
         return new RedirectView("/user/list", true);
     }
 
     @GetMapping("/delete/{username}")
-    public View deleteTicket(@PathVariable("username") String username) {
+    public View deleteCourse(@PathVariable("username") String username) {
         ticketUserRepo.delete(ticketUserRepo.findById(username).orElse(null));
         return new RedirectView("/user/list", true);
     }

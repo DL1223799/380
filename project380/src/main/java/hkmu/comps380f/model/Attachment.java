@@ -31,12 +31,12 @@ public class Attachment implements Serializable {
     @Lob
     private byte[] contents;
 
-    @Column(name = "ticket_id", insertable = false, updatable = false)
-    private long ticketId;
+    @Column(name = "course_id", insertable = false, updatable = false)
+    private long courseId;
 
     @ManyToOne
-    @JoinColumn(name = "ticket_id")
-    private Ticket ticket;
+    @JoinColumn(name = "course_id")
+    private Course course;
 
     // getters and setters of all properties
     public long getId() {
@@ -71,19 +71,19 @@ public class Attachment implements Serializable {
         this.contents = contents;
     }
 
-    public long getTicketId() {
-        return ticketId;
+    public long getCourseId() {
+        return courseId;
     }
 
-    public void setTicketId(long ticketId) {
-        this.ticketId = ticketId;
+    public void setCourseId(long courseId) {
+        this.courseId = courseId;
     }
 
-    public Ticket getTicket() {
-        return ticket;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }

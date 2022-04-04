@@ -10,24 +10,24 @@
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
 
-<h2>Ticket #${ticket.id}: <c:out value="${ticket.subject}" /></h2>
-<security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'">
-    [<a href="<c:url value="/ticket/edit/${ticket.id}" />">Edit</a>]
+<h2>Course #${course.id}: <c:out value="${course.subject}" /></h2>
+<security:authorize access="hasRole('ADMIN') or principal.username=='${course.customerName}'">
+    [<a href="<c:url value="/course/edit/${course.id}" />">Edit</a>]
 </security:authorize>
 <security:authorize access="hasRole('ADMIN')">            
-    [<a href="<c:url value="/ticket/delete/${ticket.id}" />">Delete</a>]
+    [<a href="<c:url value="/course/delete/${course.id}" />">Delete</a>]
 </security:authorize>
 <br /><br />
-<i>Customer Name - <c:out value="${ticket.customerName}" /></i><br /><br />
-<c:out value="${ticket.body}" /><br /><br />
-<c:if test="${fn:length(ticket.attachments) > 0}">
+<i>Customer Name - <c:out value="${course.customerName}" /></i><br /><br />
+<c:out value="${course.body}" /><br /><br />
+<c:if test="${fn:length(course.attachments) > 0}">
     Attachments:
-    <c:forEach items="${ticket.attachments}" var="attachment" varStatus="status">
+    <c:forEach items="${course.attachments}" var="attachment" varStatus="status">
         <c:if test="${!status.first}">, </c:if>
-        <a href="<c:url value="/ticket/${ticket.id}/attachment/${attachment.name}" />">
+        <a href="<c:url value="/course/${course.id}/attachment/${attachment.name}" />">
             <c:out value="${attachment.name}" /></a>
     </c:forEach><br /><br />
 </c:if>
-<a href="<c:url value="/ticket" />">Return to list tickets</a>
+<a href="<c:url value="/course" />">Return to list courses</a>
 </body>
 </html>
