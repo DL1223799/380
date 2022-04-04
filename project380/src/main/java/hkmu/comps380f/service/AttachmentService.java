@@ -13,7 +13,7 @@ public class AttachmentService {
     private AttachmentRepository attachmentRepo;
 
     @Transactional
-    public Attachment getAttachment(long ticketId, String name) {
-        return attachmentRepo.findByCourseIdAndName(ticketId, name);
+    public Attachment getAttachment(long courseId, String name) {
+        return attachmentRepo.findByCourseIdAndName(courseId, name);
     }
 }

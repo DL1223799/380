@@ -19,11 +19,11 @@ import org.springframework.web.servlet.view.RedirectView;
 public class CourseUserController {
 
     @Resource
-    CourseUserRepository ticketUserRepo;
+    CourseUserRepository courseUserRepo;
 
     @GetMapping({"", "/list"})
     public String list(ModelMap model) {
-        model.addAttribute("ticketUsers", ticketUserRepo.findAll());
+        model.addAttribute("courseUsers", courseUserRepo.findAll());
         return "listUser";
     }
 
@@ -61,20 +61,20 @@ public class CourseUserController {
 
     @GetMapping("/create")
     public ModelAndView create() {
-        return new ModelAndView("addUser", "ticketUser", new Form());
+        return new ModelAndView("addUser", "courseUser", new Form());
     }
 
     @PostMapping("/create")
     public View create(Form form) throws IOException {
         CourseUser user = new CourseUser(form.getUsername(),
                 form.getPassword(), form.getRoles());
-        ticketUserRepo.save(user);
+        courseUserRepo.save(user);
         return new RedirectView("/user/list", true);
     }
 
     @GetMapping("/delete/{username}")
     public View deleteCourse(@PathVariable("username") String username) {
-        ticketUserRepo.delete(ticketUserRepo.findById(username).orElse(null));
+        courseUserRepo.delete(courseUserRepo.findById(username).orElse(null));
         return new RedirectView("/user/list", true);
     }
 }
