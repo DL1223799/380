@@ -4,11 +4,6 @@
     <title>Customer Support</title>
 </head>
 <body>
-<c:url var="logoutUrl" value="/cslogout"/>
-<form action="${logoutUrl}" method="post">
-    <input type="submit" value="Log out" />
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-</form>
 
 <h2>Courses</h2>
 <security:authorize access="hasRole('ADMIN')">    
@@ -37,4 +32,9 @@
     </c:otherwise>
 </c:choose>
 <h2>poll</h2>
+<c:url var="logoutUrl" value="/cslogout"/>
+<form action="${logoutUrl}" method="post">
+    <input type="submit" value="Log out" />
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</form>
 </body>

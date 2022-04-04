@@ -2,11 +2,6 @@
 <html>
 <head><title>Customer Support User Management</title></head>
 <body>
-<c:url var="logoutUrl" value="/cslogout"/>
-<form action="${logoutUrl}" method="post">
-    <input type="submit" value="Log out" />
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-</form>
 <br /><br />
 <a href="<c:url value="/course" />">Return to list courses</a>
 <h2>Users</h2>
@@ -37,4 +32,9 @@
     </table>
     </c:otherwise>
 </c:choose>
+<c:url var="logoutUrl" value="/cslogout"/>
+<form action="${logoutUrl}" method="post">
+    <input type="submit" value="Log out" />
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</form>
 </body>

@@ -2,11 +2,6 @@
 <html>
 <head><title>Customer Support</title></head>
 <body>
-<c:url var="logoutUrl" value="/cslogout"/>
-<form action="${logoutUrl}" method="post">
-    <input type="submit" value="Log out" />
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-</form>
 <h2>Create a User</h2>
 <form:form method="POST" enctype="multipart/form-data" modelAttribute="courseUser">
     <form:label path="username">Username</form:label><br/>
@@ -19,5 +14,10 @@
     <br /><br />
     <input type="submit" value="Add User"/>
 </form:form>
+<c:url var="logoutUrl" value="/cslogout"/>
+<form action="${logoutUrl}" method="post">
+    <input type="submit" value="Log out" />
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</form>
 </body>
 </html>
