@@ -21,15 +21,3 @@ INSERT INTO user_roles(username, role) VALUES ('john', 'ROLE_ADMIN');
 
 INSERT INTO users VALUES ('mary', '{noop}marypw');
 INSERT INTO user_roles(username, role) VALUES ('mary', 'ROLE_USER');
-
-INSERT INTO users VALUES ('david', '{noop}davidpw');
-INSERT INTO user_roles(username, role) VALUES ('david', 'ROLE_USER');
-
-INSERT INTO users VALUES ('andy', '{noop}andypw');
-INSERT INTO user_roles(username, role) VALUES ('andy', 'ROLE_USER');
-
-INSERT INTO users VALUES ('samuel', '{noop}samuelpw');
-INSERT INTO user_roles(username, role) VALUES ('samuel', 'ROLE_USER');
-
-INSERT INTO users VALUES ('marco', '{noop}marcopw');
-INSERT INTO user_roles(username, role) VALUES ('marco', 'ROLE_USER');
