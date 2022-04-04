@@ -13,7 +13,7 @@
 <h2>Courses</h2>
 <security:authorize access="hasRole('ADMIN')">    
     <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
-<a href="<c:url value="/course/create" />">Create a Course</a><br /><br />
+    <a href="<c:url value="/course/create" />">Create a Course</a><br /><br />
 </security:authorize>
 <c:choose>
     <c:when test="${fn:length(courseDatabase) == 0}">
@@ -36,4 +36,5 @@
         </c:forEach>
     </c:otherwise>
 </c:choose>
+<h2>poll</h2>
 </body>
