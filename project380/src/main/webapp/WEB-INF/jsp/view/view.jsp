@@ -5,6 +5,7 @@
 </head>
 <body>
 
+
 <h2>Course #${course.id}: <c:out value="${course.subject}" /></h2>
 <security:authorize access="hasRole('ADMIN') or principal.username=='${course.customerName}'">
     [<a href="<c:url value="/course/edit/${course.id}" />">Edit</a>]
