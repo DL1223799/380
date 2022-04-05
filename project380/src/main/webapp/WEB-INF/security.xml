@@ -27,8 +27,8 @@
 
     <http>
         <intercept-url pattern="/user/**" access="hasRole('ADMIN')" /> 
-        <intercept-url pattern="/course/delete/**" access="hasRole('ADMIN')" /> 
-        <intercept-url pattern="/course/**" access="hasAnyRole('USER','ADMIN')" />
+        <intercept-url pattern="/ticket/delete/**" access="hasRole('ADMIN')" /> 
+        <intercept-url pattern="/ticket/**" access="hasAnyRole('USER','ADMIN')" />
         <form-login login-page="/cslogin" login-processing-url="/cslogin"
                     authentication-failure-url="/cslogin?error" />
         <logout logout-url="/cslogout" logout-success-url="/cslogin?logout"
@@ -38,10 +38,10 @@
 
     <context:annotation-config />
 
-    <b:bean id="courseUserService" class="hkmu.comps380f.service.CourseUserService" />
+    <b:bean id="ticketUserService" class="hkmu.comps380f.service.CourseUserService" />
 
     <authentication-manager>
-        <authentication-provider user-service-ref="courseUserService" />
+        <authentication-provider user-service-ref="ticketUserService" />
     </authentication-manager>
 
     <!-- Configure the entity manager factory bean -->

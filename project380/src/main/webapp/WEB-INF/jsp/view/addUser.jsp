@@ -14,7 +14,7 @@
     <br /><br />
     <input type="submit" value="Add User"/>
 </form:form>
-    <c:url var="logoutUrl" value="/cslogout"/>
+<c:url var="logoutUrl" value="/cslogout"/>
 <form action="${logoutUrl}" method="post">
     <input type="submit" value="Log out" />
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

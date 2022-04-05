@@ -5,7 +5,6 @@
 </head>
 <body>
 
-
 <h2>Course #${course.id}</h2>
 <form:form method="POST" enctype="multipart/form-data" modelAttribute="courseForm">   
     <form:label path="subject">Subject</form:label><br/>
