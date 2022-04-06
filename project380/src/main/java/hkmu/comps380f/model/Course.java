@@ -90,6 +90,9 @@ public class Course implements Serializable {
         attachment.setCourse(null);
         this.attachments.remove(attachment);
     }
+    public void addComment(CourseUserComment comment) {
+        comments.add(comment);
+    }
     public void deleteComment(CourseUserComment comment) {
         comment.setCourse(null);
         comment.setUser(null);

@@ -1,8 +1,14 @@
 package hkmu.comps380f.controller;
 
+import hkmu.comps380f.dao.CourseRepository;
+import hkmu.comps380f.dao.CourseUserCommentRepository;
 import hkmu.comps380f.dao.CourseUserRepository;
+import hkmu.comps380f.model.CommentForm;
 import hkmu.comps380f.model.CourseUser;
+import hkmu.comps380f.model.Course;
+import hkmu.comps380f.model.CourseUserComment;
 import java.io.IOException;
+import java.security.Principal;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,6 +26,10 @@ public class CourseUserController {
 
     @Resource
     CourseUserRepository courseUserRepo;
+    @Resource
+    private CourseUserCommentRepository courseUserCommentRepository;
+    @Resource
+    private CourseRepository courseRepository;
 
     @GetMapping({"", "/list"})
     public String list(ModelMap model) {
@@ -104,5 +114,23 @@ form.getFullName(),form.getPhoneNumber(),form.getDeliveryAddress(),form.getRoles
     public View deleteCourse(@PathVariable("username") String username) {
         courseUserRepo.delete(courseUserRepo.findById(username).orElse(null));
         return new RedirectView("/user/list", true);
+    }
+    @PostMapping("/{courseId}/addComment")
+    public String addComment(@PathVariable("courseId") long courseId,
+            CommentForm commentForm, Principal principal, ModelMap model) {
+        Course course = courseRepository.findById(courseId).orElse(null);
+        CourseUser user = courseUserRepo.findById(principal.getName()).orElse(null);
+        course.setComments(courseUserCommentRepository.findByCourseId(courseId));
+
+        CourseUserComment courseUserComment = new CourseUserComment();
+        courseUserComment.setComment(commentForm.getComment());
+        courseUserComment.setCourse(course);
+        courseUserComment.setUser(user);
+
+        course.addComment(courseUserComment);
+
+        courseRepository.save(course);
+
+        return "redirect:/course/" + courseId;
     }
 }
