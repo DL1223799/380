@@ -31,7 +31,34 @@ public class CourseUserController {
 
         private String username;
         private String password;
+        private String fullName;
+        private String phoneNumber;
+        private String deliveryAddress;
         private String[] roles;
+        public void setFullName(String fullName) {
+            this.fullName = fullName;
+        }
+
+        public void setPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+        }
+
+        public void setDeliveryAddress(String deliveryAddress) {
+            this.deliveryAddress = deliveryAddress;
+        }
+
+        public String getFullName() {
+            return fullName;
+        }
+
+        public String getPhoneNumber() {
+            return phoneNumber;
+        }
+
+        public String getDeliveryAddress() {
+            return deliveryAddress;
+        }
+       
 
         // ... getters and setters for each of the properties
         public String getUsername() {
@@ -66,11 +93,12 @@ public class CourseUserController {
 
     @PostMapping("/create")
     public View create(Form form) throws IOException {
-        CourseUser user = new CourseUser(form.getUsername(),
-                form.getPassword(), form.getRoles());
+        CourseUser user = new CourseUser(form.getUsername(),form.getPassword(),
+form.getFullName(),form.getPhoneNumber(),form.getDeliveryAddress(),form.getRoles());
         courseUserRepo.save(user);
         return new RedirectView("/user/list", true);
     }
+
 
     @GetMapping("/delete/{username}")
     public View deleteCourse(@PathVariable("username") String username) {

@@ -7,7 +7,7 @@
         <security:authorize access="hasRole('ADMIN')">
             <h2>Admin Right</h2>
             <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
-            <a href="<c:url value="/course/create" />">Create a Ticket</a><br /><br />
+            <a href="<c:url value="/course/create" />">Create a Course</a><br /><br />
         </security:authorize>
         <h2>Courses</h2>
 

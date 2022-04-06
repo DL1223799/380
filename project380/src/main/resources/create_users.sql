@@ -1,7 +1,10 @@
 CREATE TABLE users (
-    username VARCHAR(50) NOT NULL,
+    username varchar(50) not null,
     password VARCHAR(50) NOT NULL,
-    PRIMARY KEY (username)
+    full_name varchar(50) not null,
+    phone_number varchar(8) not null,
+    delivery_address varchar(255) not null,
+    primary key (username)
 );
 
 CREATE TABLE user_roles (
@@ -12,12 +15,12 @@ CREATE TABLE user_roles (
     FOREIGN KEY (username) REFERENCES users(username)
 );
 
-INSERT INTO users VALUES ('keith', '{noop}keithpw');
+INSERT INTO users VALUES ('keith', '{noop}keithpw','ouhk', '38026567', 'ouhk');
 INSERT INTO user_roles(username, role) VALUES ('keith', 'ROLE_USER');
 INSERT INTO user_roles(username, role) VALUES ('keith', 'ROLE_ADMIN');
 
-INSERT INTO users VALUES ('john', '{noop}johnpw');
+INSERT INTO users VALUES ('john', '{noop}johnpw','ouhk', '38026567', 'ouhk');
 INSERT INTO user_roles(username, role) VALUES ('john', 'ROLE_ADMIN');
 
-INSERT INTO users VALUES ('mary', '{noop}marypw');
+INSERT INTO users VALUES ('mary', '{noop}marypw','ouhk', '38026567', 'ouhk');
 INSERT INTO user_roles(username, role) VALUES ('mary', 'ROLE_USER');
