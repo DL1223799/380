@@ -1,5 +1,7 @@
 package hkmu.comps380f.controller;
 
+import hkmu.comps380f.dao.CourseRepository;
+import hkmu.comps380f.dao.CourseUserCommentRepository;
 import hkmu.comps380f.exception.AttachmentNotFound;
 import hkmu.comps380f.exception.CourseNotFound;
 import hkmu.comps380f.model.Attachment;
@@ -10,6 +12,7 @@ import hkmu.comps380f.view.DownloadingView;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +29,11 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequestMapping("/course")
 public class CourseController {
+@Resource
+    private CourseRepository courseRepository;
 
+    @Resource
+    private CourseUserCommentRepository courseUserCommentRepository;
     @Autowired
     private CourseService courseService;
 
@@ -90,6 +97,7 @@ public class CourseController {
         if (course == null) {
             return "redirect:/course/list";
         }
+        course.setComments(courseUserCommentRepository.findByCourseId(courseId));
         model.addAttribute("course", course);
         return "view";
     }
