@@ -26,7 +26,7 @@
     </b:bean> 
 
     <http>
-        <intercept-url pattern="/user/**" access="hasRole('ADMIN')" /> 
+        <intercept-url pattern="/user/**" access="hasAnyRole('ADMIN','USER')" /> 
         <intercept-url pattern="/course/delete/**" access="hasRole('ADMIN')" /> 
         <intercept-url pattern="/course/**" access="hasAnyRole('USER','ADMIN')" />
         <form-login login-page="/cslogin" login-processing-url="/cslogin"
