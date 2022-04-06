@@ -22,7 +22,7 @@ public class Course implements Serializable {
     private long id;
 
     @Column(name = "name")
-    private String customerName;
+    private String lectureName;
 
     private String subject;
 
@@ -54,12 +54,12 @@ public class Course implements Serializable {
         this.id = id;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getLectureName() {
+        return lectureName;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setLectureName(String lectureName) {
+        this.lectureName = lectureName;
     }
 
     public String getSubject() {

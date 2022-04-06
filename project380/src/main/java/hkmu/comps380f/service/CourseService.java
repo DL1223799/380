@@ -58,10 +58,10 @@ public class CourseService {
     }
 
     @Transactional
-    public long createCourse(String customerName, String subject,
+    public long createCourse(String lectureName, String subject,
             String body, List<MultipartFile> attachments) throws IOException {
         Course course = new Course();
-        course.setCustomerName(customerName);
+        course.setCustomerName(lectureName);
         course.setSubject(subject);
         course.setBody(body);
 

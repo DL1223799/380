@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Customer Support</title>
+        <title>Course list</title>
     </head>
     <body>
         <security:authorize access="hasRole('ADMIN')">
@@ -21,7 +21,7 @@
                     Course ${course.id}:
                     <a href="<c:url value="/course/view/${course.id}" />">
                         <c:out value="${course.subject}" /></a>
-                    (customer: <c:out value="${course.customerName}" />)
+                    (lecture: <c:out value="${course.lectureName}" />)
                     <security:authorize access="hasRole('ADMIN')">
                         [<a href="<c:url value="/course/edit/${course.id}" />">Edit</a>]
                     </security:authorize>

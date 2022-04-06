@@ -7,14 +7,14 @@
 
 
 <h2>Course #${course.id}: <c:out value="${course.subject}" /></h2>
-<security:authorize access="hasRole('ADMIN') or principal.username=='${course.customerName}'">
+<security:authorize access="hasRole('ADMIN') or principal.username=='${course.lectureName}'">
     [<a href="<c:url value="/course/edit/${course.id}" />">Edit</a>]
 </security:authorize>
 <security:authorize access="hasRole('ADMIN')">            
     [<a href="<c:url value="/course/delete/${course.id}" />">Delete</a>]
 </security:authorize>
 <br /><br />
-<i>Customer Name - <c:out value="${course.customerName}" /></i><br /><br />
+<i>Customer Name - <c:out value="${course.lectureName}" /></i><br /><br />
 <c:out value="${course.body}" /><br /><br />
 <c:if test="${fn:length(course.attachments) > 0}">
     Attachments:
