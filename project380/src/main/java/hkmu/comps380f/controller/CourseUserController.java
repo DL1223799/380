@@ -133,8 +133,7 @@ form.getFullName(),form.getPhoneNumber(),form.getDeliveryAddress(),form.getRoles
         course.addComment(courseUserComment);
 
         courseRepository.save(course);
-
-        return "redirect:/course/" + courseId;
+        return "redirect:/course/view/" + courseId;
     }
 @GetMapping("/delete/{courseId}/Comment/{commentId}")
     public String deleteComment(@PathVariable("courseId") long courseId,
@@ -143,6 +142,6 @@ form.getFullName(),form.getPhoneNumber(),form.getDeliveryAddress(),form.getRoles
             courseService.deleteCourseComment(courseId, commentId);
         } catch (CourseCommentNotFound ex) {
         }
-        return "redirect:/course/" + courseId;
+        return "redirect:/course/view/" + courseId;
     }
 }

@@ -5,6 +5,7 @@ import hkmu.comps380f.dao.CourseUserCommentRepository;
 import hkmu.comps380f.exception.AttachmentNotFound;
 import hkmu.comps380f.exception.CourseNotFound;
 import hkmu.comps380f.model.Attachment;
+import hkmu.comps380f.model.CommentForm;
 import hkmu.comps380f.model.Course;
 import hkmu.comps380f.service.AttachmentService;
 import hkmu.comps380f.service.CourseService;
@@ -99,6 +100,7 @@ public class CourseController {
         }
         course.setComments(courseUserCommentRepository.findByCourseId(courseId));
         model.addAttribute("course", course);
+        model.addAttribute("newComment", new CommentForm());
         return "view";
     }
 

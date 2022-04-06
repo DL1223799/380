@@ -24,6 +24,32 @@
             <c:out value="${attachment.name}" /></a>
     </c:forEach><br /><br />
 </c:if>
+    <c:choose>
+            <c:when test="${!empty course.comments}" >
+                <h3 style="margin-bottom:1px;">Comment</h3>
+                <div style="border-style:solid; margin-top: 1px;">
+                    <c:forEach items="${course.comments}" var="comment">
+                        ${comment.username}: ${comment.comment} 
+                        <security:authorize access="hasRole('ADMIN')">
+                            <a href="<c:url value='/user/delete/${course.id}/Comment/${comment.id}' />" >[Delete]</a>
+                        </security:authorize>
+                        <br/>
+                    </c:forEach>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <h3>No Comment Yet</h3>
+            </c:otherwise>
+        </c:choose>
+
+        <security:authorize access="hasAnyRole('ADMIN','USER')">
+            <c:url value="/user/${course.id}/addComment" var="addCommentURL"/>
+            <form:form action="${addCommentURL}" method="POST" modelAttribute="newComment">
+                 <form:label path="comment">Add Comment: </form:label><br/>
+                <form:textarea path="comment"/><br/>
+                <input type="submit"/><br/><br/><br/>
+            </form:form>
+        </security:authorize> 
 <a href="<c:url value="/course" />">Return to list courses</a>
 <c:url var="logoutUrl" value="/cslogout"/>
 <form action="${logoutUrl}" method="post">
