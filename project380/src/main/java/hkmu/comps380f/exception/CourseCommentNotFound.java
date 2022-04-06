@@ -8,6 +8,6 @@ package hkmu.comps380f.exception;
  *
  * @author user
  */
-public class FoodCommentNotFound {
+public class CourseCommentNotFound extends Exception{
     
 }
