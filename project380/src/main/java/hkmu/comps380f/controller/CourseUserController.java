@@ -3,10 +3,12 @@ package hkmu.comps380f.controller;
 import hkmu.comps380f.dao.CourseRepository;
 import hkmu.comps380f.dao.CourseUserCommentRepository;
 import hkmu.comps380f.dao.CourseUserRepository;
+import hkmu.comps380f.exception.CourseCommentNotFound;
 import hkmu.comps380f.model.CommentForm;
 import hkmu.comps380f.model.CourseUser;
 import hkmu.comps380f.model.Course;
 import hkmu.comps380f.model.CourseUserComment;
+import hkmu.comps380f.service.CourseService;
 import java.io.IOException;
 import java.security.Principal;
 import javax.annotation.Resource;
@@ -23,7 +25,8 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequestMapping("/user")
 public class CourseUserController {
-
+    @Resource
+    private CourseService courseService;
     @Resource
     CourseUserRepository courseUserRepo;
     @Resource
@@ -131,6 +134,15 @@ form.getFullName(),form.getPhoneNumber(),form.getDeliveryAddress(),form.getRoles
 
         courseRepository.save(course);
 
+        return "redirect:/course/" + courseId;
+    }
+@GetMapping("/delete/{courseId}/Comment/{commentId}")
+    public String deleteComment(@PathVariable("courseId") long courseId,
+            @PathVariable("commentId") long commentId) {
+        try {
+            courseService.deleteCourseComment(courseId, commentId);
+        } catch (CourseCommentNotFound ex) {
+        }
         return "redirect:/course/" + courseId;
     }
 }
