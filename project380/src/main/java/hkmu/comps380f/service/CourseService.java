@@ -61,7 +61,7 @@ public class CourseService {
     public long createCourse(String lectureName, String subject,
             String body, List<MultipartFile> attachments) throws IOException {
         Course course = new Course();
-        course.setCustomerName(lectureName);
+        course.setLectureName(lectureName);
         course.setSubject(subject);
         course.setBody(body);
 
