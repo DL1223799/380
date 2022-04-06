@@ -25,8 +25,14 @@
             </c:forEach>
         </ul>
     </c:if>
-    <b>Add attachments</b><br />
-    <input type="file" name="attachments" multiple="multiple"/><br/><br/>
+    <form:label path="attachments">
+                Add Attachments
+            </form:label><br />
+            <input type="file" id="files" 
+                   name="attachments" 
+                   value="Choose New Files"
+                   multiple="multiple" onchange="updateFileList()" />
+            <div id="fileList"></div><br/>
     <input type="submit" value="Save"/><br/><br/>
 </form:form>
 <a href="<c:url value="/course" />">Return to list courses</a>
@@ -35,5 +41,22 @@
     <input type="submit" value="Log out" />
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
+    <script>
+        const fileList = document.getElementById("fileList");
+        const files = document.getElementById("files");
+        const updateFileList = () => {
+            let fileListHTML = "";
+            if (files.files.length > 1) {
+                for (let i = 0; i < files.files.length; i++) {
+                    if (i > 0) {
+                        fileListHTML += "\n ";
+                    }
+                    fileListHTML += files.files[i].name;
+                }
+            }
+            fileList.innerHTML = fileListHTML;
+        }
+
+    </script>
 </body>
 </html> 

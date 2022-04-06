@@ -20,7 +20,9 @@ create table Course_user_Comments(
     username varchar(50) not null,
     course_id integer not null,
     comment varchar(255) not null,
-    primary key (comment_id),
+    username VARCHAR(50) NOT NULL,
+    PRIMARY KEY (comment_id),
     FOREIGN KEY (username) REFERENCES users(username),
-    foreign key (course_id) references course(id)
+    FOREIGN KEY (course_id) REFERENCES course(id),
+    FOREIGN KEY (username) REFERENCES users(username)
 );
