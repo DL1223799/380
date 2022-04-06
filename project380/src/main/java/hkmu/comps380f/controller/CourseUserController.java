@@ -120,7 +120,7 @@ form.getFullName(),form.getPhoneNumber(),form.getDeliveryAddress(),form.getRoles
     }
     @PostMapping("/{courseId}/addComment")
     public String addComment(@PathVariable("courseId") long courseId,
-            CommentForm commentForm, Principal principal, ModelMap model) {
+        CommentForm commentForm, Principal principal, ModelMap model) {
         Course course = courseRepository.findById(courseId).orElse(null);
         CourseUser user = courseUserRepo.findById(principal.getName()).orElse(null);
         course.setComments(courseUserCommentRepository.findByCourseId(courseId));
@@ -135,7 +135,7 @@ form.getFullName(),form.getPhoneNumber(),form.getDeliveryAddress(),form.getRoles
         courseRepository.save(course);
         return "redirect:/course/view/" + courseId;
     }
-@GetMapping("/delete/{courseId}/Comment/{commentId}")
+    @GetMapping("/delete/{courseId}/Comment/{commentId}")
     public String deleteComment(@PathVariable("courseId") long courseId,
             @PathVariable("commentId") long commentId) {
         try {
