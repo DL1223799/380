@@ -33,6 +33,18 @@ public class Course implements Serializable {
     @Fetch(FetchMode.SUBSELECT)
     private List<Attachment> attachments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    private List<CourseUserComment> comments = new ArrayList<>();
+
+    public void setComments(List<CourseUserComment> comments) {
+        this.comments = comments;
+    }
+
+    public List<CourseUserComment> getComments() {
+        return comments;
+    }
     // getters and setters of all properties
     public long getId() {
         return id;
@@ -77,5 +89,10 @@ public class Course implements Serializable {
     public void deleteAttachment(Attachment attachment) {
         attachment.setCourse(null);
         this.attachments.remove(attachment);
+    }
+    public void deleteComment(CourseUserComment comment) {
+        comment.setCourse(null);
+        comment.setUser(null);
+        comments.remove(comment);
     }
 }

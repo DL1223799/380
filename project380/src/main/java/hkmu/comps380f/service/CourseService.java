@@ -2,10 +2,13 @@ package hkmu.comps380f.service;
 
 import hkmu.comps380f.dao.AttachmentRepository;
 import hkmu.comps380f.dao.CourseRepository;
+import hkmu.comps380f.dao.CourseUserCommentRepository;
 import hkmu.comps380f.exception.AttachmentNotFound;
+import hkmu.comps380f.exception.CourseCommentNotFound;
 import hkmu.comps380f.exception.CourseNotFound;
 import hkmu.comps380f.model.Attachment;
 import hkmu.comps380f.model.Course;
+import hkmu.comps380f.model.CourseUserComment;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.Resource;
@@ -18,10 +21,10 @@ public class CourseService {
 
     @Resource
     private CourseRepository courseRepo;
-
     @Resource
     private AttachmentRepository attachmentRepo;
-
+    @Resource
+    private CourseUserCommentRepository courseUserCommentRepository;
     @Transactional
     public List<Course> getCourses() {
         return courseRepo.findAll();
@@ -103,5 +106,19 @@ public class CourseService {
             }
         }
         courseRepo.save(updatedCourse);
+    }
+@Transactional(rollbackFor = CourseCommentNotFound.class)
+    public void deleteCourseComment(long courseId, long commentId) throws CourseCommentNotFound {
+        Course course = courseRepo.findById(courseId).orElse(null);
+        course.setComments(courseUserCommentRepository.findByCourseId(courseId));
+
+        for (CourseUserComment courseUserComment : course.getComments()) {
+            if (courseUserComment.getId() == commentId) {
+                course.deleteComment(courseUserComment);
+                courseRepo.save(course);
+                return;
+            }
+        }
+        throw new CourseCommentNotFound();
     }
 }
