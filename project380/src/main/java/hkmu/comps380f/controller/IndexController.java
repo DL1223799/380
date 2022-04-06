@@ -25,7 +25,10 @@ CourseUserRepository courseuserRepository;
     }
 
     @GetMapping("/cslogin")
-    public String login() {
+   public String login(Principal principal) {
+        if (principal != null) {
+            return "redirect:/";
+        }
         return "login";
     }
 //show list
@@ -53,7 +56,7 @@ CourseUserRepository courseuserRepository;
                 CourseUser newUser = new CourseUser(courseuser.getUsername(),courseuser.getPassword(),courseuser.getFullName()
 ,courseuser.getPhoneNumber(),courseuser.getDeliveryAddress(), new String[]{"ROLE_USER"});
                 courseuserRepository.save(newUser);
-                return "redirect:/login";}
+                return "redirect:/cslogin";}
         else return "redirect:/";
     }
 

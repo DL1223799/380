@@ -13,7 +13,19 @@
             ${status.message}<br/>
         </c:if>
         <h1>Sign up</h1>
-        
+        <form:form action="register" method="POST" modelAttribute="courseuser">
+            <form:label path="username">Username:</form:label></br>
+            <form:input path="username" /><br/><Br/>
+            <form:label path="password">Password:</form:label></br>
+            <form:password path="password" /><br/><br/>
+            <form:label path="fullName">Full Name:</form:label></br>
+            <form:input path="fullName" /><br/><br/>
+            <form:label path="phoneNumber">Phone Number:</form:label></br>
+            <form:input path="phoneNumber" /><br/><br/>
+            <form:label path="deliveryAddress">Delivery Address:</form:label></br>
+            <form:input path="deliveryAddress" /><br/><br/>
+            <input type="submit" value="Sign up" />            
+        </form:form>
         <br/>
     </body>
 </html>

@@ -34,7 +34,7 @@ public class CourseUser implements Serializable {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserRole> roles = new ArrayList<>();
+    private List<UserRole> userRoles = new ArrayList<>();
 
     public CourseUser() {
     }
@@ -47,10 +47,10 @@ public class CourseUser implements Serializable {
         this.phoneNumber = phoneNumber;
         this.deliveryAddress = deliveryAddress;
         if (roles == null || roles.length == 0) {
-            this.roles.add(new UserRole(this, "ROLE_USER"));
+            this.userRoles.add(new UserRole(this, "ROLE_USER"));
         }
         for (String role : roles) {
-            this.roles.add(new UserRole(this, role));
+            this.userRoles.add(new UserRole(this, role));
         }
     }
 
@@ -94,11 +94,11 @@ public class CourseUser implements Serializable {
         this.deliveryAddress = deliveryAddress;
     }
     public List<UserRole> getRoles() {
-        return roles;
+        return userRoles;
     }
 
     public void setRoles(List<UserRole> roles) {
-        this.roles = roles;
+        this.userRoles = roles;
     }
 
 }
