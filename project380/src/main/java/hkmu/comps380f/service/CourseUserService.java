@@ -1,6 +1,9 @@
 package hkmu.comps380f.service;
 
+<<<<<<< Updated upstream:project380/src/main/java/hkmu/comps380f/service/CourseUserService.java
 import hkmu.comps380f.dao.CourseUserRepository;
+=======
+>>>>>>> Stashed changes:project 380/src/main/java/hkmu/comps380f/service/TicketUserService.java
 import hkmu.comps380f.model.CourseUser;
 import hkmu.comps380f.model.UserRole;
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import hkmu.comps380f.dao.CourseUserRepository;
 
 @Service
 public class CourseUserService implements UserDetailsService {
