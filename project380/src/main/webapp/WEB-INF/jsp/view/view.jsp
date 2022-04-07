@@ -56,5 +56,6 @@
     <input type="submit" value="Log out" />
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
+    [<a href="<c:url value="/course/polling/${course.id}" />">polling</a>]
 </body>
 </html>

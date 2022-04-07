@@ -38,6 +38,19 @@ public class Course implements Serializable {
     @Fetch(FetchMode.SUBSELECT)
     private List<CourseUserComment> comments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    private List<CourseUserPolling> pollings = new ArrayList<>();
+
+    public void setPollings(List<CourseUserPolling> pollings) {
+        this.pollings = pollings;
+    }
+
+    public List<CourseUserPolling> getPollings() {
+        return pollings;
+    }
+
     public void setComments(List<CourseUserComment> comments) {
         this.comments = comments;
     }
@@ -97,5 +110,13 @@ public class Course implements Serializable {
         comment.setCourse(null);
         comment.setUser(null);
         comments.remove(comment);
+    }
+    public void addPolling(CourseUserPolling polling) {
+        pollings.add(polling);
+    }
+    public void deletePolling(CourseUserPolling polling) {
+        polling.setCourse(null);
+        polling.setUser(null);
+        pollings.remove(polling);
     }
 }

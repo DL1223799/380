@@ -3,11 +3,15 @@ package hkmu.comps380f.controller;
 import hkmu.comps380f.dao.CourseRepository;
 import hkmu.comps380f.dao.CourseUserCommentRepository;
 import hkmu.comps380f.dao.CourseUserRepository;
+import hkmu.comps380f.dao.PollingRepository;
 import hkmu.comps380f.exception.CourseCommentNotFound;
+import hkmu.comps380f.exception.PollingNotFound;
 import hkmu.comps380f.model.CommentForm;
 import hkmu.comps380f.model.CourseUser;
 import hkmu.comps380f.model.Course;
 import hkmu.comps380f.model.CourseUserComment;
+import hkmu.comps380f.model.CourseUserPolling;
+import hkmu.comps380f.model.PollingForm;
 import hkmu.comps380f.service.CourseService;
 import java.io.IOException;
 import java.security.Principal;
@@ -31,6 +35,8 @@ public class CourseUserController {
     CourseUserRepository courseUserRepo;
     @Resource
     private CourseUserCommentRepository courseUserCommentRepository;
+    @Resource
+    private PollingRepository pollingRepository;
     @Resource
     private CourseRepository courseRepository;
 
@@ -143,5 +149,35 @@ form.getFullName(),form.getPhoneNumber(),form.getDeliveryAddress(),form.getRoles
         } catch (CourseCommentNotFound ex) {
         }
         return "redirect:/course/view/" + courseId;
+    }
+    @PostMapping("/{courseId}/addPollingt")
+    public String addPollingt(@PathVariable("pollingId") long pollingId,
+        PollingForm pollingForm, Principal principal, ModelMap model) {
+        Course course = courseRepository.findById(pollingId).orElse(null);
+        CourseUser user = courseUserRepo.findById(principal.getName()).orElse(null);
+        course.setPollings(pollingRepository.findByCourseId(pollingId));
+
+        CourseUserPolling courseUserPolling = new CourseUserPolling();
+        courseUserPolling.setQuestion(pollingForm.getQuestion());
+        courseUserPolling.setA(pollingForm.getA());
+        courseUserPolling.setB(pollingForm.getB());
+        courseUserPolling.setC(pollingForm.getC());
+        courseUserPolling.setD(pollingForm.getD());
+        courseUserPolling.setCourse(course);
+        courseUserPolling.setUser(user);
+
+        course.addPolling(courseUserPolling);
+
+        courseRepository.save(course);
+        return "redirect:/course/view/" + pollingId;
+    }
+    @GetMapping("/delete/{courseId}/Polling/{pollingId}")
+    public String deletePolling(@PathVariable("courseId") long courseId,
+            @PathVariable("pollingId") long pollingId) {
+        try {
+            courseService.deleteCoursePolling(courseId, pollingId);
+        } catch (PollingNotFound ex) {
+        }
+        return "redirect:/course/view/" + pollingId;
     }
 }

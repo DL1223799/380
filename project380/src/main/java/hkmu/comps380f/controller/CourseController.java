@@ -2,11 +2,13 @@ package hkmu.comps380f.controller;
 
 import hkmu.comps380f.dao.CourseRepository;
 import hkmu.comps380f.dao.CourseUserCommentRepository;
+import hkmu.comps380f.dao.PollingRepository;
 import hkmu.comps380f.exception.AttachmentNotFound;
 import hkmu.comps380f.exception.CourseNotFound;
 import hkmu.comps380f.model.Attachment;
 import hkmu.comps380f.model.CommentForm;
 import hkmu.comps380f.model.Course;
+import hkmu.comps380f.model.PollingForm;
 import hkmu.comps380f.service.AttachmentService;
 import hkmu.comps380f.service.CourseService;
 import hkmu.comps380f.view.DownloadingView;
@@ -30,11 +32,13 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequestMapping("/course")
 public class CourseController {
-@Resource
+    @Resource
     private CourseRepository courseRepository;
 
     @Resource
     private CourseUserCommentRepository courseUserCommentRepository;
+    @Resource
+    private PollingRepository pollingRepository;
     @Autowired
     private CourseService courseService;
 
@@ -167,4 +171,15 @@ public class CourseController {
         return "redirect:/course/list";
     }
 
+    @GetMapping("/polling/{courseId}")
+    public String polling(@PathVariable("courseId") long courseId, ModelMap model) {
+        Course course = courseService.getCourse(courseId);
+        if (course == null) {
+            return "redirect:/view/{courseId}";
+        }
+        course.setPollings(pollingRepository.findByCourseId(courseId));
+        model.addAttribute("course", course);
+        model.addAttribute("newPolling", new PollingForm());
+        return "view";
+    }
 }
