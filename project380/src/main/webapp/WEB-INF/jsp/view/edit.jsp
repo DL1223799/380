@@ -28,10 +28,22 @@
     <form:label path="attachments">
                 Add Attachments
             </form:label><br />
-            <input type="file" id="files" 
+            
+            <div class="drag-area">
+                <input type="file" id="files" 
                    name="attachments" 
-                   value="Choose New Files"
+                   value="Choose Files"
                    multiple="multiple" onchange="updateFileList()" />
+                           
+                <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                <link rel="stylesheet" href="style.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+                <header>Drag & Drop to Upload File</header>
+                <span>OR</span>
+                <button>Browse File</button>
+                <input type="file" hidden>
+            </div>
+            
             <div id="fileList"></div><br/>
     <input type="submit" value="Save"/><br/><br/>
 </form:form>
