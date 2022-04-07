@@ -19,7 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Course_user_Pollings")
+@Table(name = "Course_Polling")
 public class CourseUserPolling implements Serializable {
 
     @Id

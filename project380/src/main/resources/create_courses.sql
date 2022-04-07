@@ -25,7 +25,7 @@ create table Course_user_Comments(
     FOREIGN KEY (course_id) REFERENCES course(id)
 );
 
-create table Course_polling(
+create table Course_Polling(
     polling_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
     course_id integer not null,
     question varchar(255) not null,

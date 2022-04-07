@@ -171,8 +171,14 @@ public class CourseController {
         return "redirect:/course/list";
     }
     @GetMapping("/polling/{courseId}")
-    public String polling(ModelMap model, Principal principal) {
-        model.addAttribute("courseDatabase", courseService.getCourses());
-        return "polling";
+    public String polling(@PathVariable("courseId") long courseId, ModelMap model) {
+        Course course = courseService.getCourse(courseId);
+        if (course == null) {
+            return "redirect:/course/view";
+        }
+        course.setPollings(pollingRepository.findByCourseId(courseId));
+        model.addAttribute("course", course);
+        model.addAttribute("newPolling", new PollingForm());
+        return "view";
     }
 }
