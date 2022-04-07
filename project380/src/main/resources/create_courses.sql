@@ -15,3 +15,13 @@ CREATE TABLE attachment (
     PRIMARY KEY (id),
     FOREIGN KEY (course_id) REFERENCES course(id)
 );
+create table Course_user_Comments(
+    comment_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    course_id integer not null,
+    comment varchar(255) not null,
+    username VARCHAR(50) NOT NULL,
+    PRIMARY KEY (comment_id),
+    FOREIGN KEY (username) REFERENCES users(username),
+    FOREIGN KEY (course_id) REFERENCES course(id),
+    FOREIGN KEY (username) REFERENCES users(username)
+);

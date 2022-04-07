@@ -16,13 +16,8 @@
             <th>Username</th><th>Password</th><th>Full name</th><th>Phone</th><th>Email</th><th>Roles</th><th>Action</th>
         </tr>
         <c:forEach items="${courseUsers}" var="user">
-<<<<<<< Updated upstream:project380/src/main/webapp/WEB-INF/jsp/view/listUser.jsp
             <td>${user.username}</td><td>${user.password}</td><td>${user.fullName}</td><td>${user.phoneNumber}</td>
             <td>${user.deliveryAddress}</td>
-=======
-        <tr>
-            <td>${user.username}</td><td>${user.password}</td>
->>>>>>> Stashed changes:project 380/src/main/webapp/WEB-INF/jsp/view/listUser.jsp
             <td>
                 <c:forEach items="${user.roles}" var="role" varStatus="status">
                     <c:if test="${!status.first}">, </c:if>

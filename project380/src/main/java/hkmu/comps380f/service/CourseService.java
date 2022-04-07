@@ -1,27 +1,30 @@
 package hkmu.comps380f.service;
 
 import hkmu.comps380f.dao.AttachmentRepository;
+import hkmu.comps380f.dao.CourseRepository;
+import hkmu.comps380f.dao.CourseUserCommentRepository;
 import hkmu.comps380f.exception.AttachmentNotFound;
+import hkmu.comps380f.exception.CourseCommentNotFound;
 import hkmu.comps380f.exception.CourseNotFound;
 import hkmu.comps380f.model.Attachment;
 import hkmu.comps380f.model.Course;
+import hkmu.comps380f.model.CourseUserComment;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import hkmu.comps380f.dao.CourseRepository;
 
 @Service
 public class CourseService {
 
     @Resource
     private CourseRepository courseRepo;
-
     @Resource
     private AttachmentRepository attachmentRepo;
-
+    @Resource
+    private CourseUserCommentRepository courseUserCommentRepository;
     @Transactional
     public List<Course> getCourses() {
         return courseRepo.findAll();
@@ -55,10 +58,10 @@ public class CourseService {
     }
 
     @Transactional
-    public long createCourse(String customerName, String subject,
+    public long createCourse(String lectureName, String subject,
             String body, List<MultipartFile> attachments) throws IOException {
         Course course = new Course();
-        course.setCustomerName(customerName);
+        course.setLectureName(lectureName);
         course.setSubject(subject);
         course.setBody(body);
 
@@ -103,5 +106,19 @@ public class CourseService {
             }
         }
         courseRepo.save(updatedCourse);
+    }
+@Transactional(rollbackFor = CourseCommentNotFound.class)
+    public void deleteCourseComment(long courseId, long commentId) throws CourseCommentNotFound {
+        Course course = courseRepo.findById(courseId).orElse(null);
+        course.setComments(courseUserCommentRepository.findByCourseId(courseId));
+
+        for (CourseUserComment courseUserComment : course.getComments()) {
+            if (courseUserComment.getId() == commentId) {
+                course.deleteComment(courseUserComment);
+                courseRepo.save(course);
+                return;
+            }
+        }
+        throw new CourseCommentNotFound();
     }
 }

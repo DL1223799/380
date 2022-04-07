@@ -5,10 +5,7 @@ import hkmu.comps380f.dao.CourseUserCommentRepository;
 import hkmu.comps380f.exception.AttachmentNotFound;
 import hkmu.comps380f.exception.CourseNotFound;
 import hkmu.comps380f.model.Attachment;
-<<<<<<< Updated upstream:project380/src/main/java/hkmu/comps380f/controller/CourseController.java
 import hkmu.comps380f.model.CommentForm;
-=======
->>>>>>> Stashed changes:project 380/src/main/java/hkmu/comps380f/controller/TicketController.java
 import hkmu.comps380f.model.Course;
 import hkmu.comps380f.service.AttachmentService;
 import hkmu.comps380f.service.CourseService;
@@ -33,11 +30,8 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequestMapping("/course")
 public class CourseController {
-<<<<<<< Updated upstream:project380/src/main/java/hkmu/comps380f/controller/CourseController.java
 @Resource
     private CourseRepository courseRepository;
-=======
->>>>>>> Stashed changes:project 380/src/main/java/hkmu/comps380f/controller/TicketController.java
 
     @Resource
     private CourseUserCommentRepository courseUserCommentRepository;
@@ -104,13 +98,9 @@ public class CourseController {
         if (course == null) {
             return "redirect:/course/list";
         }
-<<<<<<< Updated upstream:project380/src/main/java/hkmu/comps380f/controller/CourseController.java
         course.setComments(courseUserCommentRepository.findByCourseId(courseId));
         model.addAttribute("course", course);
         model.addAttribute("newComment", new CommentForm());
-=======
-        model.addAttribute("course", course);
->>>>>>> Stashed changes:project 380/src/main/java/hkmu/comps380f/controller/TicketController.java
         return "view";
     }
 
@@ -139,11 +129,7 @@ public class CourseController {
         Course course = courseService.getCourse(courseId);
         if (course == null
                 || (!request.isUserInRole("ROLE_ADMIN")
-<<<<<<< Updated upstream:project380/src/main/java/hkmu/comps380f/controller/CourseController.java
                 && !principal.getName().equals(course.getLectureName()))) {
-=======
-                && !principal.getName().equals(course.getCustomerName()))) {
->>>>>>> Stashed changes:project 380/src/main/java/hkmu/comps380f/controller/TicketController.java
             return new ModelAndView(new RedirectView("/course/list", true));
         }
 
@@ -165,11 +151,7 @@ public class CourseController {
         Course course = courseService.getCourse(courseId);
         if (course == null
                 || (!request.isUserInRole("ROLE_ADMIN")
-<<<<<<< Updated upstream:project380/src/main/java/hkmu/comps380f/controller/CourseController.java
                 && !principal.getName().equals(course.getLectureName()))) {
-=======
-                && !principal.getName().equals(course.getCustomerName()))) {
->>>>>>> Stashed changes:project 380/src/main/java/hkmu/comps380f/controller/TicketController.java
             return "redirect:/course/list";
         }
 
