@@ -17,7 +17,6 @@ CREATE TABLE attachment (
 );
 create table Course_user_Comments(
     comment_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-    username varchar(50) not null,
     course_id integer not null,
     comment varchar(255) not null,
     username VARCHAR(50) NOT NULL,
