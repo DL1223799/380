@@ -5,6 +5,7 @@
     </head>
     <body>
         <h2>polling</h2>
+        <p>course:${course.id}<p>
         <c:url value="/user/${course.id}/addPolling" var="addPollingURL"/>
             <form:form action="${addPollingURL}" method="POST" modelAttribute="newPolling">
             <form:label path="question">Question:</form:label></br>

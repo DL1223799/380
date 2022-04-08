@@ -150,12 +150,12 @@ form.getFullName(),form.getPhoneNumber(),form.getDeliveryAddress(),form.getRoles
         }
         return "redirect:/course/view/" + courseId;
     }
-    @PostMapping("/{courseId}/addPollingt")
-    public String addPollingt(@PathVariable("pollingId") long pollingId,
+    @PostMapping("/{courseId}/addPolling")
+    public String addPolling(@PathVariable("courseId") long courseId,
         PollingForm pollingForm, Principal principal, ModelMap model) {
-        Course course = courseRepository.findById(pollingId).orElse(null);
+        Course course = courseRepository.findById(courseId).orElse(null);
         CourseUser user = courseUserRepo.findById(principal.getName()).orElse(null);
-        course.setPollings(pollingRepository.findByCourseId(pollingId));
+        course.setPollings(pollingRepository.findByCourseId(courseId));
 
         CourseUserPolling courseUserPolling = new CourseUserPolling();
         courseUserPolling.setQuestion(pollingForm.getQuestion());
@@ -169,7 +169,7 @@ form.getFullName(),form.getPhoneNumber(),form.getDeliveryAddress(),form.getRoles
         course.addPolling(courseUserPolling);
 
         courseRepository.save(course);
-        return "redirect:/course/view/" + pollingId;
+        return "redirect:/course/view/" + courseId;
     }
     @GetMapping("/delete/{courseId}/Polling/{pollingId}")
     public String deletePolling(@PathVariable("courseId") long courseId,

@@ -190,6 +190,8 @@ public class CourseController {
             return "redirect:/course/view";
         }
         CourseUserPolling courseuser = new CourseUserPolling();
+        model.addAttribute("courseDatabase", courseService.getCourses());
+        model.addAttribute("course", course);
         model.addAttribute("courseuser", courseuser);
         model.addAttribute("newPolling", new PollingForm());
         return "polling";
