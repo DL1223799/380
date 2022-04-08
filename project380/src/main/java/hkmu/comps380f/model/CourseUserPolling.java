@@ -26,10 +26,6 @@ public class CourseUserPolling implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "polling_id")
     private long id;
-    
-    @Column(name="username", insertable=false, updatable=false)
-    private String username;
-    
     @Column(name="course_id", insertable=false, updatable=false)
     private long courseId;
     
@@ -39,9 +35,75 @@ public class CourseUserPolling implements Serializable {
     private String a;
     @Column(name="b")
     private String b;
+    @Column(name="c")
+    private String c;
+    @Column(name="d")
+    private String d;
+        
+    @Column(name="username", insertable=false, updatable=false)
+    private String username;
+
+    @ManyToOne
+    @JoinColumn(name="username")
+    private CourseUser user;
+    @ManyToOne
+    @JoinColumn(name="course_id")
+    private Course course;
+
+    public long getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public long getCourseId() {
+        return courseId;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public String getA() {
+        return a;
+    }
+
+    public String getB() {
+        return b;
+    }
+
+    public String getC() {
+        return c;
+    }
+
+    public String getD() {
+        return d;
+    }
+
+    public CourseUser getUser() {
+        return user;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setCourseId(long courseId) {
+        this.courseId = courseId;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
     public void setA(String a) {
@@ -59,83 +121,14 @@ public class CourseUserPolling implements Serializable {
     public void setD(String d) {
         this.d = d;
     }
-    @Column(name="c")
-    private String c;
-
-    public String getA() {
-        return a;
-    }
-
-    public String getB() {
-        return b;
-    }
-
-    public String getC() {
-        return c;
-    }
-
-    public String getD() {
-        return d;
-    }
-    @Column(name="d")
-    private String d;
-    
-    @ManyToOne
-    @JoinColumn(name="username")
-    private CourseUser user;
-    
-    @ManyToOne
-    @JoinColumn(name="course_id")
-    private Course course;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(int pollingId) {
-        this.id = pollingId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public long getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(long courseId) {
-        this.courseId = courseId;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public CourseUser getUser() {
-        return user;
-    }
 
     public void setUser(CourseUser user) {
         this.user = user;
     }
 
-    public Course getCourse() {
-        return course;
-    }
-
     public void setCourse(Course course) {
         this.course = course;
     }
-    
     
 }
 

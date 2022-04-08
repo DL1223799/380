@@ -33,9 +33,9 @@ create table Course_Polling(
     b varchar(255) not null,
     c varchar(255),
     d varchar(255),
-    poller VARCHAR(50) NOT NULL,
+    username VARCHAR(50) NOT NULL,
     PRIMARY KEY (polling_id),
-    FOREIGN KEY (poller) REFERENCES users(username),
+    FOREIGN KEY (username) REFERENCES users(username),
     FOREIGN KEY (course_id) REFERENCES course(id)
 );
 create table Polling_option(
