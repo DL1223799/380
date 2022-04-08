@@ -13,6 +13,7 @@
 <security:authorize access="hasRole('ADMIN')">            
     [<a href="<c:url value="/course/delete/${course.id}" />">Delete</a>]
 </security:authorize>
+    [<a href="<c:url value="/course/polling/${course.id}" />">Create Polling of this course</a>]
 <br /><br />
 <i>Customer Name - <c:out value="${course.lectureName}" /></i><br /><br />
 <c:out value="${course.body}" /><br /><br />
@@ -56,6 +57,6 @@
     <input type="submit" value="Log out" />
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
-    [<a href="<c:url value="/course/polling/${course.id}" />">polling</a>]
+    
 </body>
 </html>
