@@ -34,6 +34,8 @@
         </c:choose>
         <h2>Polling</h2>
         <h2>Comment</h2>
+        <h2>${comments}</h2>
+        <h2>${pollings}</h2>
         <security:authorize access="hasAnyRole('ADMIN','USER')">
             <c:url var="logoutUrl" value="/cslogout"/>
             <form action="${logoutUrl}" method="post">

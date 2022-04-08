@@ -2,8 +2,12 @@ package hkmu.comps380f.controller;
 
 import hkmu.comps380f.model.Course;
 import hkmu.comps380f.dao.CourseRepository;
+import hkmu.comps380f.dao.CourseUserCommentRepository;
 import hkmu.comps380f.dao.CourseUserRepository;
+import hkmu.comps380f.dao.PollingRepository;
 import hkmu.comps380f.model.CourseUser;
+import hkmu.comps380f.model.CourseUserComment;
+import hkmu.comps380f.model.CourseUserPolling;
 import hkmu.comps380f.service.CourseService;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -17,8 +21,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class IndexController {
-@Resource
-CourseUserRepository courseuserRepository;
+    @Resource
+    CourseUserRepository courseuserRepository;
+    @Resource
+    PollingRepository pollingRepository;
+    @Resource
+    CourseUserCommentRepository courseUserCommentRepository;
     @GetMapping
     public String index() {
         return "redirect:/course/list";
@@ -37,6 +45,10 @@ CourseUserRepository courseuserRepository;
 
     @GetMapping("/")
     public String list(ModelMap model, Principal principal) {
+        List<CourseUserComment> comments = courseUserCommentRepository.findAll();
+        List<CourseUserPolling> pollings = pollingRepository.findAll();
+        model.addAttribute("comments", comments);
+        model.addAttribute("pollings", pollings);
         model.addAttribute("courseDatabase", courseService.getCourses());
         return "list";
     }

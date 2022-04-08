@@ -15,6 +15,7 @@ import hkmu.comps380f.model.PollingForm;
 import hkmu.comps380f.service.CourseService;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -42,6 +43,10 @@ public class CourseUserController {
 
     @GetMapping({"", "/list"})
     public String list(ModelMap model) {
+        List<CourseUserComment> comments = courseUserCommentRepository.findAll();
+        List<CourseUserPolling> pollings = pollingRepository.findAll();
+        model.addAttribute("comments", comments);
+        model.addAttribute("pollings", pollings);
         model.addAttribute("courseUsers", courseUserRepo.findAll());
         return "listUser";
     }

@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -42,75 +43,54 @@ public class CourseUserOption implements Serializable {
     @ManyToOne
     @JoinColumn(name="course_id")
     private Course course;
-
-    @ManyToOne
-    @JoinColumn(name="polling_id")
-    private CourseUserPolling polling;  
-
+    
     public long getId() {
         return id;
+    }
+
+    public void setId(int optionId) {
+        this.id = optionId;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public long getCourseId() {
-        return courseId;
-    }
-
-    public String getOption() {
-        return option;
-    }
-
-    public String getPollingId() {
-        return pollingId;
-    }
-
-    public CourseUser getUser() {
-        return user;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public CourseUserPolling getPolling() {
-        return polling;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public long getCourseId() {
+        return courseId;
     }
 
     public void setCourseId(long courseId) {
         this.courseId = courseId;
     }
 
+    public String getOption() {
+        return option;
+    }
+
     public void setOption(String option) {
         this.option = option;
     }
 
-    public void setPollingId(String pollingId) {
-        this.pollingId = pollingId;
+    public CourseUser getUser() {
+        return user;
     }
 
     public void setUser(CourseUser user) {
         this.user = user;
     }
 
+    public Course getCourse() {
+        return course;
+    }
+
     public void setCourse(Course course) {
         this.course = course;
     }
-
-    public void setPolling(CourseUserPolling polling) {
-        this.polling = polling;
-    }
-  
+    
+    
 }
-
-
