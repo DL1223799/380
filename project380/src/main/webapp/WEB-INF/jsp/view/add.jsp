@@ -23,8 +23,7 @@
             <div class="drag-area">
                 <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
                 <header>Drag & Drop to Upload File</header>
-                <span>OR</span>
-                <button>Browse File</button>
+                <br/>
                 <input type="file" hidden>
             </div>
 
