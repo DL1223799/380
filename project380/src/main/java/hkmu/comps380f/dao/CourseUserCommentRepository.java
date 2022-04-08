@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CourseUserCommentRepository extends JpaRepository<CourseUserComment, Long> {
 
-    public List<CourseUserComment> findByCourseId(Long foodId);
+    public List<CourseUserComment> findByCourseId(Long commentId);
     
     
 

@@ -126,7 +126,7 @@ public class CourseService {
         }
         throw new CourseCommentNotFound();
     }
-@Transactional(rollbackFor = CourseCommentNotFound.class)
+@Transactional(rollbackFor = PollingNotFound.class)
     public void deleteCoursePolling(long courseId, long pollingId) throws PollingNotFound {
         Course course = courseRepo.findById(courseId).orElse(null);
         course.setPollings(pollingRepository.findByCourseId(courseId));

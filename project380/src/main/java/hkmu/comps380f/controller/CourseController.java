@@ -8,6 +8,7 @@ import hkmu.comps380f.exception.CourseNotFound;
 import hkmu.comps380f.model.Attachment;
 import hkmu.comps380f.model.CommentForm;
 import hkmu.comps380f.model.Course;
+import hkmu.comps380f.model.CourseUserPolling;
 import hkmu.comps380f.model.PollingForm;
 import hkmu.comps380f.service.AttachmentService;
 import hkmu.comps380f.service.CourseService;
@@ -170,15 +171,27 @@ public class CourseController {
         courseService.delete(courseId);
         return "redirect:/course/list";
     }
-    @GetMapping("/polling/{courseId}")
+    /**@GetMapping("/polling/{courseId}")
     public String polling(@PathVariable("courseId") long courseId, ModelMap model) {
         Course course = courseService.getCourse(courseId);
         if (course == null) {
             return "redirect:/course/view";
         }
-        course.setPollings(pollingRepository.findByCourseId(courseId));
-        model.addAttribute("course", course);
-        model.addAttribute("newPolling", new PollingForm());
+        //course.setPollings(pollingRepository.findByCourseId(courseId));
+        //model.addAttribute("course", course);
+        //model.addAttribute("newPolling", new PollingForm());
         return "view";
+    }**/
+    @GetMapping("/polling/{courseId}")
+     public String polling(@PathVariable("courseId") long courseId, ModelMap model) {
+        //model.addAttribute("courseDatabase", courseService.getCourses());
+        Course course = courseService.getCourse(courseId);
+        if (course == null) {
+            return "redirect:/course/view";
+        }
+        CourseUserPolling courseuser = new CourseUserPolling();
+        model.addAttribute("courseuser", courseuser);
+        model.addAttribute("newPolling", new PollingForm());
+        return "polling";
     }
 }
