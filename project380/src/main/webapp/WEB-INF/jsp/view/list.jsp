@@ -33,6 +33,26 @@
             </c:otherwise>
         </c:choose>
         <h2>Polling</h2>
+        <c:choose>
+            <c:when test="${empty pollings}">
+                <i>There are no courses in the system.</i>
+            </c:when>
+            <c:otherwise>
+                <c:forEach items="${pollings}" var="poll">
+                    Poll <a href="<c:url value="${poll.question}" />"><c:out value="${poll.question}"/></a> from:
+                    
+                        <c:out value="${poll.username}" />
+                    
+                    <security:authorize access="hasRole('ADMIN')">
+                        [<a href="<c:url value="/course/edit/${poll.polling_id}" />">Edit</a>]
+                    </security:authorize>
+                    <security:authorize access="hasRole('ADMIN')">            
+                        [<a href="<c:url value="/course/delete/${poll.polling.id}" />">Delete</a>]
+                    </security:authorize>
+                    <br /><br />
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
         <h2>Comment</h2>
         <h2>${comments}</h2>
         <h2>${pollings}</h2>
