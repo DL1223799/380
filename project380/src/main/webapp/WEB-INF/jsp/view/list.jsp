@@ -35,19 +35,19 @@
         <h2>Polling</h2>
         <c:choose>
             <c:when test="${empty pollings}">
-                <i>There are no courses in the system.</i>
+                <i>There are no polling in the system.</i>
             </c:when>
             <c:otherwise>
                 <c:forEach items="${pollings}" var="poll">
-                    Poll <a href="<c:url value="${poll.question}" />"><c:out value="${poll.question}"/></a> from:
+                    Poll <a href="<c:url value="course/view/${poll.question}" />"><c:out value="${poll.question}"/></a> from:
                     
                         <c:out value="${poll.username}" />
                     
                     <security:authorize access="hasRole('ADMIN')">
-                        [<a href="<c:url value="/course/edit/${poll.polling_id}" />">Edit</a>]
+                        [<a href="<c:url value="" />">Edit</a>]
                     </security:authorize>
                     <security:authorize access="hasRole('ADMIN')">            
-                        [<a href="<c:url value="/course/delete/${poll.polling.id}" />">Delete</a>]
+                        [<a href="<c:url value="" />">Delete</a>]
                     </security:authorize>
                     <br /><br />
                 </c:forEach>
@@ -56,6 +56,26 @@
         <h2>Comment</h2>
         <h2>${comments}</h2>
         <h2>${pollings}</h2>
+        <c:choose>
+            <c:when test="${empty comments}">
+                <i>There are no polling in the system.</i>
+            </c:when>
+            <c:otherwise>
+                <c:forEach items="${comments}" var="comment">
+                    Comment <a href="<c:url value="/course/view/${comment.comment}" />"><c:out value="${comment.comment}"/></a> from:
+                    
+                        <c:out value="${comment.username}" />
+                    
+                    <security:authorize access="hasRole('ADMIN')">
+                        [<a href="<c:url value="" />">Edit</a>]
+                    </security:authorize>
+                    <security:authorize access="hasRole('ADMIN')">            
+                        [<a href="<c:url value="" />">Delete</a>]
+                    </security:authorize>
+                    <br /><br />
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
         <security:authorize access="hasAnyRole('ADMIN','USER')">
             <c:url var="logoutUrl" value="/cslogout"/>
             <form action="${logoutUrl}" method="post">
