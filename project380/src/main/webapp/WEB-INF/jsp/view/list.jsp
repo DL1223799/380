@@ -58,7 +58,7 @@
         <h2>${pollings}</h2>
         <c:choose>
             <c:when test="${empty comments}">
-                <i>There are no polling in the system.</i>
+                <i>There are no comment in the system.</i>
             </c:when>
             <c:otherwise>
                 <c:forEach items="${comments}" var="comment">
