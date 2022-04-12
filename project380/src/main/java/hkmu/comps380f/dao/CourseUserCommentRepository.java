@@ -4,10 +4,6 @@
  */
 package hkmu.comps380f.dao;
 
-/**
- *
- * @author user
- */
 import hkmu.comps380f.model.CourseUserComment;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

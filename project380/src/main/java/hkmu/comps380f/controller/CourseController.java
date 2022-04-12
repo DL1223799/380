@@ -8,6 +8,7 @@ import hkmu.comps380f.exception.CourseNotFound;
 import hkmu.comps380f.model.Attachment;
 import hkmu.comps380f.model.CommentForm;
 import hkmu.comps380f.model.Course;
+import hkmu.comps380f.model.CourseUserComment;
 import hkmu.comps380f.model.CourseUserPolling;
 import hkmu.comps380f.model.PollingForm;
 import hkmu.comps380f.service.AttachmentService;
@@ -49,6 +50,11 @@ public class CourseController {
     // Controller methods, Form object, ...
     @GetMapping({"", "/list"})
     public String list(ModelMap model) {
+        List<CourseUserComment> comments = courseUserCommentRepository.findAll();
+        List<CourseUserPolling> pollings = pollingRepository.findAll();
+        model.addAttribute("comments", comments);
+        model.addAttribute("pollings", pollings);
+        model.addAttribute("courseDatabase", courseService.getCourses());
         model.addAttribute("courseDatabase", courseService.getCourses());
         return "list";
     }
@@ -103,6 +109,10 @@ public class CourseController {
         if (course == null) {
             return "redirect:/course/list";
         }
+        List<CourseUserComment> comments = courseUserCommentRepository.findAll();
+        List<CourseUserPolling> pollings = pollingRepository.findAll();
+        model.addAttribute("comments", comments);
+        model.addAttribute("pollings", pollings);
         course.setComments(courseUserCommentRepository.findByCourseId(courseId));
         model.addAttribute("course", course);
         model.addAttribute("newComment", new CommentForm());
