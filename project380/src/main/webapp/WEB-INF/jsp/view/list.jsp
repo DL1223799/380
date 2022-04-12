@@ -21,7 +21,7 @@
                     Course ${course.id}:
                     <a href="<c:url value="/course/view/${course.id}" />">
                         <c:out value="${course.subject}" /></a>
-                    (lecture: <c:out value="${course.lectureName}" />)
+                    (lecturer: <c:out value="${course.lectureName}" />)
                     <security:authorize access="hasRole('ADMIN')">
                         [<a href="<c:url value="/course/edit/${course.id}" />">Edit</a>]
                     </security:authorize>
@@ -39,38 +39,36 @@
             </c:when>
             <c:otherwise>
                 <c:forEach items="${pollings}" var="poll">
-                    Poll <a href="<c:url value="course/view/${poll.question}" />"><c:out value="${poll.question}"/></a> from:
+                    Poll <a href="<c:url value="course/view/${poll.id}" />"><c:out value="${poll.question}"/></a> from course:
                     
-                        <c:out value="${poll.username}" />
+                        <c:out value="${poll.courseId}" />
                     
                     <security:authorize access="hasRole('ADMIN')">
-                        [<a href="<c:url value="" />">Edit</a>]
+                        [<a href="<c:url value="/edit/${poll.id}/Polling/${poll.id}" />">Edit</a>]
                     </security:authorize>
                     <security:authorize access="hasRole('ADMIN')">            
-                        [<a href="<c:url value="" />">Delete</a>]
+                        [<a href="<c:url value="/delete/${poll.id}/Polling/${poll.id}" />">Delete</a>]
                     </security:authorize>
                     <br /><br />
                 </c:forEach>
             </c:otherwise>
         </c:choose>
         <h2>Comment</h2>
-        <h2>${comments}</h2>
-        <h2>${pollings}</h2>
         <c:choose>
             <c:when test="${empty comments}">
                 <i>There are no comment in the system.</i>
             </c:when>
             <c:otherwise>
                 <c:forEach items="${comments}" var="comment">
-                    Comment <a href="<c:url value="/course/view/${comment.comment}" />"><c:out value="${comment.comment}"/></a> from:
+                    Comment <a href="<c:url value="/course/view/${comment.id}" />"><c:out value="${comment.comment}"/></a> from course:
                     
-                        <c:out value="${comment.username}" />
+                        <c:out value="${comment.courseId}" />
                     
                     <security:authorize access="hasRole('ADMIN')">
-                        [<a href="<c:url value="" />">Edit</a>]
+                        [<a href="<c:url value="/edit/${comment.id}/Comment/${comment.id}" />">Edit</a>]
                     </security:authorize>
                     <security:authorize access="hasRole('ADMIN')">            
-                        [<a href="<c:url value="" />">Delete</a>]
+                        [<a href="<c:url value="/delete/${comment.id}/Comment/${comment.id}" />">Delete</a>]
                     </security:authorize>
                     <br /><br />
                 </c:forEach>
