@@ -44,10 +44,10 @@
                         <c:out value="${poll.courseId}" />
                     
                     <security:authorize access="hasRole('ADMIN')">
-                        [<a href="<c:url value="/edit/${poll.id}/Polling/${poll.id}" />">Edit</a>]
+                        [<a href="<c:url value="/edit/${poll.courseId}/Polling/${poll.id}" />">Edit</a>]
                     </security:authorize>
                     <security:authorize access="hasRole('ADMIN')">            
-                        [<a href="<c:url value="/delete/${poll.id}/Polling/${poll.id}" />">Delete</a>]
+                        [<a href="<c:url value="/delete/${poll.courseId}/Polling/${poll.id}" />">Delete</a>]
                     </security:authorize>
                     <br /><br />
                 </c:forEach>
@@ -65,10 +65,10 @@
                         <c:out value="${comment.courseId}" />
                     
                     <security:authorize access="hasRole('ADMIN')">
-                        [<a href="<c:url value="/edit/${comment.id}/Comment/${comment.id}" />">Edit</a>]
+                        [<a href="<c:url value="/edit/${comment.courseId}/Comment/${comment.id}" />">Edit</a>]
                     </security:authorize>
                     <security:authorize access="hasRole('ADMIN')">            
-                        [<a href="<c:url value="/delete/${comment.id}/Comment/${comment.id}" />">Delete</a>]
+                        [<a href="<c:url value="/delete/${comment.courseId}/Comment/${comment.id}" />">Delete</a>]
                     </security:authorize>
                     <br /><br />
                 </c:forEach>
