@@ -8,6 +8,6 @@ package hkmu.comps380f.exception;
  *
  * @author user
  */
-public class CourseOptionNotFound extends Exception {
+public class OptionNotFound extends Exception{
     
 }
