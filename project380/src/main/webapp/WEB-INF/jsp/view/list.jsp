@@ -82,7 +82,7 @@
             </form>
         </security:authorize>
         <security:authorize access="!hasAnyRole('ADMIN','USER')">
-            <a href="<c:url value='/cslogin'/>"><button>Login</button></a>
+            <br><a href="<c:url value='/cslogin'/>"><button>Login</button></a>
             <a href="<c:url value='/register'/>"><button>Sign up</button></a>
         </security:authorize>
     </body>

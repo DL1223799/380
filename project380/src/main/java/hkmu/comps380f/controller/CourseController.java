@@ -9,7 +9,9 @@ import hkmu.comps380f.model.Attachment;
 import hkmu.comps380f.model.CommentForm;
 import hkmu.comps380f.model.Course;
 import hkmu.comps380f.model.CourseUserComment;
+import hkmu.comps380f.model.CourseUserOption;
 import hkmu.comps380f.model.CourseUserPolling;
+import hkmu.comps380f.model.OptionForm;
 import hkmu.comps380f.model.PollingForm;
 import hkmu.comps380f.service.AttachmentService;
 import hkmu.comps380f.service.CourseService;
@@ -205,5 +207,21 @@ public class CourseController {
         model.addAttribute("polling", polling);
         model.addAttribute("newPolling", new PollingForm());
         return "polling";
+    }
+    @GetMapping("/option/{courseId}")
+     public String option(@PathVariable("courseId") long courseId, ModelMap model) {
+        //model.addAttribute("courseDatabase", courseService.getCourses());
+        Course course = courseService.getCourse(courseId);
+        List<CourseUserPolling> pollings = pollingRepository.findAll();
+        if (course == null) {
+            return "redirect:/course/view";
+        }
+        CourseUserOption option = new CourseUserOption();
+        model.addAttribute("courseDatabase", courseService.getCourses());
+        model.addAttribute("course", course);
+        model.addAttribute("pollings", pollings);
+        model.addAttribute("option", option);
+        model.addAttribute("newOption", new OptionForm());
+        return "option";
     }
 }

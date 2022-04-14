@@ -8,7 +8,7 @@ package hkmu.comps380f.model;
  *
  * @author user
  */
-public class OptionFrom {
+public class OptionForm {
 
     public String getOption() {
         return option;
