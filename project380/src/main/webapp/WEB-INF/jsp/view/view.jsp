@@ -14,7 +14,7 @@
     [<a href="<c:url value="/course/delete/${course.id}" />">Delete</a>]
 </security:authorize>
     [<a href="<c:url value="/course/polling/${course.id}" />">Create Polling of this course</a>]
-    [<a href="<c:url value="/course/polling/${course.id}" />">Option</a>]
+    [<a href="<c:url value="/course/option/${course.id}/1" />">Option</a>]
 <br /><br />
 <i>Customer Name - <c:out value="${course.lectureName}" /></i><br /><br />
 <c:out value="${course.body}" /><br /><br />

@@ -14,6 +14,14 @@
     <body>
         <c:forEach items="${pollings}" var="polling">
             <h1>${polling.question}</h1>
+            <form:form action="${addOptionURL}" method="POST" modelAttribute="newOption">
+        <SELECT id="option" name="option" >
+            <option value="${polling.a}" >${polling.a}</option>
+            <option value="${polling.b}" >${polling.b}</option>
+            <option value="${polling.c}" >${polling.c}</option>
+            <option value="${polling.d}" >${polling.d}</option>
+        </select>
+</form:form>
         </c:forEach>
     </body>
 </html>
