@@ -33,44 +33,42 @@
             </c:otherwise>
         </c:choose>
         <h2>Polling</h2>
+        <c:set var = "n" scope = "session" value = "${0}"/>
         <c:choose>
-            <c:when test="${empty pollings}">
+            <c:when test="${empty pollinginfos}">
                 <i>There are no polling in the system.</i>
             </c:when>
             <c:otherwise>
-                <c:forEach items="${pollings}" var="poll">
-                    Poll <a href="<c:url value="course/view/${poll.id}" />"><c:out value="${poll.question}"/></a> from course:
-                    
-                        <c:out value="${poll.courseId}" />
-                    
+                         <c:forEach items="${pollinginfos}" var="pollinginfo">
+                             ${n+1} Course:<c:out value="${pollinginfo}"/><br>                  
                     <security:authorize access="hasRole('ADMIN')">
-                        [<a href="<c:url value="/edit/${poll.courseId}/Polling/${poll.id}" />">Edit</a>]
+                        [<a href="<c:url value="/edit/${courseDatabase[n].id}/Polling/${courseDatabase[n].id}" />">Edit</a>]
                     </security:authorize>
                     <security:authorize access="hasRole('ADMIN')">            
-                        [<a href="<c:url value="/delete/${poll.courseId}/Polling/${poll.id}" />">Delete</a>]
+                        [<a href="<c:url value="/delete/${courseDatabase[n].id}/Polling/${courseDatabase[n].id}" />">Delete</a>]
                     </security:authorize>
                     <br /><br />
+             <c:set var = "n" scope = "session" value = "${n+1}"/>
                 </c:forEach>
             </c:otherwise>
         </c:choose>
         <h2>Comment</h2>
+        <c:set var = "n" scope = "session" value = "${0}"/>
         <c:choose>
-            <c:when test="${empty comments}">
+            <c:when test="${empty Commentinfos}">
                 <i>There are no comment in the system.</i>
             </c:when>
             <c:otherwise>
-                <c:forEach items="${comments}" var="comment">
-                    Comment <a href="<c:url value="/course/view/${comment.id}" />"><c:out value="${comment.comment}"/></a> from course:
-                    
-                        <c:out value="${comment.courseId}" />
-                    
+                <c:forEach items="${Commentinfos}" var="commentinfo">
+                    ${n+1} Course:<a href="<c:url value="/course/view/${courseDatabase[n].id}" />"><c:out value="${commentinfo}"/></a><br>                   
                     <security:authorize access="hasRole('ADMIN')">
-                        [<a href="<c:url value="/edit/${comment.courseId}/Comment/${comment.id}" />">Edit</a>]
+                        [<a href="<c:url value="/edit/${courseDatabase[n].id}/Comment/${courseDatabase[n].id}" />">Edit</a>]
                     </security:authorize>
                     <security:authorize access="hasRole('ADMIN')">            
-                        [<a href="<c:url value="/delete/${comment.courseId}/Comment/${comment.id}" />">Delete</a>]
+                        [<a href="<c:url value="/delete/${courseDatabase[n].id}/Comment/${courseDatabase[n].id}" />">Delete</a>]
                     </security:authorize>
                     <br /><br />
+                    <c:set var = "n" scope = "session" value = "${n+1}"/>
                 </c:forEach>
             </c:otherwise>
         </c:choose>

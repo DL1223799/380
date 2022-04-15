@@ -15,6 +15,7 @@ import hkmu.comps380f.model.PollingForm;
 import hkmu.comps380f.service.CourseService;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
@@ -45,9 +46,25 @@ public class CourseUserController {
     public String list(ModelMap model) {
         List<CourseUserComment> comments = courseUserCommentRepository.findAll();
         List<CourseUserPolling> pollings = pollingRepository.findAll();
+        List<String> pollinginfos = new ArrayList<String>();
+        for (int i = 0; i < pollings.size(); i++) {
+            int pid = (int) pollings.get(i).getCourseId();
+            String v = courseService.getCourses().get(pid - 1).getSubject();
+if(pollinginfos.indexOf(v)<0){pollinginfos.add(v);}
+            
+        }
+        List<String> Commentinfos = new ArrayList<String>();
+        for (int i = 0; i < comments.size(); i++) {
+            int cid = (int) comments.get(i).getCourseId();
+            String v = courseService.getCourses().get(cid - 1).getSubject();
+if(Commentinfos.indexOf(v)<0){Commentinfos.add(v);}
+            
+        }
         model.addAttribute("comments", comments);
         model.addAttribute("pollings", pollings);
-        model.addAttribute("courseUsers", courseUserRepo.findAll());
+        model.addAttribute("Commentinfos", Commentinfos);
+        model.addAttribute("pollinginfos", pollinginfos);
+        model.addAttribute("courseDatabase", courseService.getCourses());
         return "listUser";
     }
 
