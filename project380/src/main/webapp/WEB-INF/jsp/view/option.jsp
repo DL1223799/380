@@ -16,10 +16,14 @@
        
             <h1>${pollings[pollingId-1].question}</h1>
             <form:form action="${addOptionURL}" method="POST" modelAttribute="newOption">
-        ${pollings[pollingId].a}<form:radiobutton path="option" value="${pollings[pollingId].a}"/><br>
-        ${pollings[pollingId].b}<form:radiobutton path="option" value="${pollings[pollingId].b}"/><br>
-        ${pollings[pollingId].c}<form:radiobutton path="option" value="${pollings[pollingId].c}"/><br>
-        ${pollings[pollingId].d}<form:radiobutton path="option" value="${pollings[pollingId].d}"/><br>
+        ${pollings[pollingId-1].a}<form:radiobutton path="option" value="${pollings[pollingId-1].a}"/><br>
+        ${pollings[pollingId-1].b}<form:radiobutton path="option" value="${pollings[pollingId-1].b}"/><br>
+        <c:if test = "${!empty pollings[pollingId-1].c}">
+         ${pollings[pollingId-1].c}<form:radiobutton path="option" value="${pollings[pollingId-1].c}"/><br>
+      </c:if>
+        <c:if test = "${!empty pollings[pollingId-1].d}">
+         ${pollings[pollingId-1].d}<form:radiobutton path="option" value="${pollings[pollingId-1].d}"/><br>
+      </c:if>
             
        
             <input type="submit"/><br/><br/><br/>
