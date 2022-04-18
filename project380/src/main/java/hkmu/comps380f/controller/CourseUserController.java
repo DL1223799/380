@@ -231,7 +231,8 @@ public class CourseUserController {
         Course course = courseRepository.findById(courseId).orElse(null);
         CourseUser user = courseUserRepo.findById(principal.getName()).orElse(null);
         course.setOptions(courseUserOptionRepository.findByCourseId(courseId));
-
+        List<CourseUserOption> options = courseUserOptionRepository.findAll();
+        if(options.indexOf(course.getLectureName())>0){
         CourseUserOption courseUserOption = new CourseUserOption();
         courseUserOption.setOption(optionForm.getOption());
         courseUserOption.setPollingId(pollingId);
@@ -239,7 +240,7 @@ public class CourseUserController {
         courseUserOption.setUser(user);
         course.addOption(courseUserOption);
 
-        courseRepository.save(course);
+        courseRepository.save(course);}
 
         return "redirect:/course/view/" + courseId;
     }
