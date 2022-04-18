@@ -33,7 +33,7 @@
                     <c:forEach items="${course.comments}" var="comment">
                         ${comment.username}: ${comment.comment} 
                         <security:authorize access="hasRole('ADMIN')">
-                            <a href="<c:url value='/user/delete/${course.id}/Comment/${comment.id}' />" >[Delete]</a>
+                            <a href="<c:url value='/user/delete/${course.id}/Comment/${comment.id}' />" >[Delete]</a> 
                         </security:authorize>
                         <br/>
                     </c:forEach>
@@ -54,15 +54,17 @@
         </security:authorize> 
                  <c:choose>
             <c:when test="${!empty pollings}" >
+                <c:set var = "n" scope = "session" value = "${0}"/>
                 <h3 style="margin-bottom:1px;">Polling</h3>
                 <div style="border-style:solid; margin-top: 1px;">
                     <c:forEach items="${pollings}" var="polling">
                         <a href="<c:url value="/course/option/${course.id}/${polling.id}" />">${polling.question}</a>
                        
                         <security:authorize access="hasRole('ADMIN')">
-                            <a href="<c:url value='/user/delete/${course.id}/Polling/${polling.id}' />" >[Delete]</a>
+                            <a href="<c:url value='/user/delete/${course.id}/Polling/${polling.id}' />" >[Delete]</a> total:${numboptions[n]}
                         </security:authorize>
                         <br/>
+                        <c:set var = "n" scope = "session" value = "${n+1}"/>
                     </c:forEach>
                 </div>
             </c:when>

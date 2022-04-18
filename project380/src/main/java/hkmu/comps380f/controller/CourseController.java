@@ -2,6 +2,7 @@ package hkmu.comps380f.controller;
 
 import hkmu.comps380f.dao.CourseRepository;
 import hkmu.comps380f.dao.CourseUserCommentRepository;
+import hkmu.comps380f.dao.CourseUserOptionRepository;
 import hkmu.comps380f.dao.PollingRepository;
 import hkmu.comps380f.exception.AttachmentNotFound;
 import hkmu.comps380f.exception.CourseNotFound;
@@ -37,11 +38,14 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequestMapping("/course")
 public class CourseController {
+
     @Resource
     private CourseRepository courseRepository;
 
     @Resource
     private CourseUserCommentRepository courseUserCommentRepository;
+    @Resource
+    private CourseUserOptionRepository courseUserOptionRepository;
     @Resource
     private PollingRepository pollingRepository;
     @Autowired
@@ -59,15 +63,19 @@ public class CourseController {
         for (int i = 0; i < pollings.size(); i++) {
             int pid = (int) pollings.get(i).getCourseId();
             String v = courseService.getCourses().get(pid - 1).getSubject();
-if(pollinginfos.indexOf(v)<0){pollinginfos.add(v);}
-            
+            if (pollinginfos.indexOf(v) < 0) {
+                pollinginfos.add(v);
+            }
+
         }
         List<String> Commentinfos = new ArrayList<String>();
         for (int i = 0; i < comments.size(); i++) {
             int cid = (int) comments.get(i).getCourseId();
             String v = courseService.getCourses().get(cid - 1).getSubject();
-if(Commentinfos.indexOf(v)<0){Commentinfos.add(v);}
-            
+            if (Commentinfos.indexOf(v) < 0) {
+                Commentinfos.add(v);
+            }
+
         }
         model.addAttribute("comments", comments);
         model.addAttribute("pollings", pollings);
@@ -129,6 +137,19 @@ if(Commentinfos.indexOf(v)<0){Commentinfos.add(v);}
         }
         List<CourseUserComment> comments = courseUserCommentRepository.findAll();
         List<CourseUserPolling> pollings = pollingRepository.findAll();
+        List<CourseUserOption> options = courseUserOptionRepository.findAll();
+        List<Integer> numboptions = new ArrayList<Integer>();
+
+        for (int i = 0; i < pollings.size(); i++) {
+            int n = 0;
+            for (int j = 0; j < options.size(); j++) {
+                if (options.get(j).getPollingId() == pollings.get(i).getId()) {
+                    n += 1;
+                }
+            }
+            numboptions.add(n);
+        }
+        model.addAttribute("numboptions", numboptions);
         model.addAttribute("comments", comments);
         model.addAttribute("pollings", pollings);
         course.setComments(courseUserCommentRepository.findByCourseId(courseId));
@@ -199,19 +220,19 @@ if(Commentinfos.indexOf(v)<0){Commentinfos.add(v);}
         courseService.delete(courseId);
         return "redirect:/course/list";
     }
-    /**@GetMapping("/polling/{courseId}")
-    public String polling(@PathVariable("courseId") long courseId, ModelMap model) {
-        Course course = courseService.getCourse(courseId);
-        if (course == null) {
-            return "redirect:/course/view";
-        }
-        //course.setPollings(pollingRepository.findByCourseId(courseId));
-        //model.addAttribute("course", course);
-        //model.addAttribute("newPolling", new PollingForm());
-        return "view";
-    }**/
+
+    /**
+     * @GetMapping("/polling/{courseId}") public String
+     * polling(@PathVariable("courseId") long courseId, ModelMap model) { Course
+     * course = courseService.getCourse(courseId); if (course == null) { return
+     * "redirect:/course/view"; }
+     * //course.setPollings(pollingRepository.findByCourseId(courseId));
+     * //model.addAttribute("course", course);
+     * //model.addAttribute("newPolling", new PollingForm()); return "view";
+    }*
+     */
     @GetMapping("/polling/{courseId}")
-     public String polling(@PathVariable("courseId") long courseId, ModelMap model) {
+    public String polling(@PathVariable("courseId") long courseId, ModelMap model) {
         //model.addAttribute("courseDatabase", courseService.getCourses());
         Course course = courseService.getCourse(courseId);
         if (course == null) {
@@ -224,8 +245,9 @@ if(Commentinfos.indexOf(v)<0){Commentinfos.add(v);}
         model.addAttribute("newPolling", new PollingForm());
         return "polling";
     }
+
     @GetMapping("/option/{courseId}/{pollingId}")
-     public String option(@PathVariable("courseId") long courseId,@PathVariable("pollingId") long pollingId, ModelMap model) {
+    public String option(@PathVariable("courseId") long courseId, @PathVariable("pollingId") long pollingId, ModelMap model) {
         //model.addAttribute("courseDatabase", courseService.getCourses());
         Course course = courseService.getCourse(courseId);
         List<CourseUserPolling> pollings = pollingRepository.findAll();
@@ -236,7 +258,7 @@ if(Commentinfos.indexOf(v)<0){Commentinfos.add(v);}
         model.addAttribute("courseDatabase", courseService.getCourses());
         model.addAttribute("course", course);
         model.addAttribute("pollings", pollings);
-        model.addAttribute("pollingId",pollingId);
+        model.addAttribute("pollingId", pollingId);
         model.addAttribute("option", option);
         model.addAttribute("newOption", new OptionForm());
         return "option";
