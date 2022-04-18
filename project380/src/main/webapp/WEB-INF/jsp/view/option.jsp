@@ -12,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <c:url value="/user/${course.id}/${pollingId}/addOption" var="addOptionURL"/>
         <c:forEach items="${pollings}" var="polling">
             <h1>${polling.question}</h1>
             <form:form action="${addOptionURL}" method="POST" modelAttribute="newOption">
@@ -21,6 +22,7 @@
             <option value="${polling.c}" >${polling.c}</option>
             <option value="${polling.d}" >${polling.d}</option>
         </select>
+            <input type="submit"/><br/><br/><br/>
 </form:form>
         </c:forEach>
     </body>

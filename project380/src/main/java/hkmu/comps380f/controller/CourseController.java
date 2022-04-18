@@ -236,6 +236,7 @@ if(Commentinfos.indexOf(v)<0){Commentinfos.add(v);}
         model.addAttribute("courseDatabase", courseService.getCourses());
         model.addAttribute("course", course);
         model.addAttribute("pollings", pollings);
+        model.addAttribute("pollingId",pollingId);
         model.addAttribute("option", option);
         model.addAttribute("newOption", new OptionForm());
         return "option";

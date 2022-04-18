@@ -52,6 +52,24 @@
                 <input type="submit"/><br/><br/><br/>
             </form:form>
         </security:authorize> 
+                 <c:choose>
+            <c:when test="${!empty pollings}" >
+                <h3 style="margin-bottom:1px;">Polling</h3>
+                <div style="border-style:solid; margin-top: 1px;">
+                    <c:forEach items="${pollings}" var="polling">
+                        <a href="<c:url value="/course/option/${course.id}/${polling.id}" />">${polling.question}</a>
+                       
+                        <security:authorize access="hasRole('ADMIN')">
+                            <a href="<c:url value='/user/delete/${course.id}/Polling/${polling.id}' />" >[Delete]</a>
+                        </security:authorize>
+                        <br/>
+                    </c:forEach>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <h3>No Polling Yet</h3>
+            </c:otherwise>
+        </c:choose>
 <a href="<c:url value="/course" />">Return to list courses</a>
 <c:url var="logoutUrl" value="/cslogout"/>
 <form action="${logoutUrl}" method="post">

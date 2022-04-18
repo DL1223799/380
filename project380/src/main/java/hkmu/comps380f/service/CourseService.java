@@ -3,14 +3,17 @@ package hkmu.comps380f.service;
 import hkmu.comps380f.dao.AttachmentRepository;
 import hkmu.comps380f.dao.CourseRepository;
 import hkmu.comps380f.dao.CourseUserCommentRepository;
+import hkmu.comps380f.dao.CourseUserOptionRepository;
 import hkmu.comps380f.dao.PollingRepository;
 import hkmu.comps380f.exception.AttachmentNotFound;
 import hkmu.comps380f.exception.CourseCommentNotFound;
 import hkmu.comps380f.exception.CourseNotFound;
+import hkmu.comps380f.exception.OptionNotFound;
 import hkmu.comps380f.exception.PollingNotFound;
 import hkmu.comps380f.model.Attachment;
 import hkmu.comps380f.model.Course;
 import hkmu.comps380f.model.CourseUserComment;
+import hkmu.comps380f.model.CourseUserOption;
 import hkmu.comps380f.model.CourseUserPolling;
 import java.io.IOException;
 import java.util.List;
@@ -30,6 +33,8 @@ public class CourseService {
     private CourseUserCommentRepository courseUserCommentRepository;
     @Resource
     private PollingRepository pollingRepository;
+    @Resource
+    private CourseUserOptionRepository courseUserOptionRepository;
     @Transactional
     public List<Course> getCourses() {
         return courseRepo.findAll();
@@ -139,5 +144,19 @@ public class CourseService {
             }
         }
         throw new PollingNotFound();
+    }
+@Transactional(rollbackFor = OptionNotFound.class)
+    public void deleteCourseOption(long courseId, long optionId) throws OptionNotFound {
+        Course course = courseRepo.findById(courseId).orElse(null);
+        course.setOptions(courseUserOptionRepository.findByCourseId(courseId));
+
+        for (CourseUserOption courseUserOption : course.getOptions()) {
+            if (courseUserOption.getId() == optionId) {
+                course.deleteOption(courseUserOption);
+                courseRepo.save(course);
+                return;
+            }
+        }
+        throw new OptionNotFound();
     }
 }

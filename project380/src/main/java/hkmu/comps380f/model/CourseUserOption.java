@@ -34,7 +34,7 @@ public class CourseUserOption implements Serializable {
     private String option;
 
     @Column(name="polling_id")
-    private String pollingId;
+    private long pollingId;
     
     @ManyToOne
     @JoinColumn(name="username")
@@ -90,6 +90,18 @@ public class CourseUserOption implements Serializable {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public long getPollingId() {
+        return pollingId;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setPollingId(long pollingId) {
+        this.pollingId = pollingId;
     }
     
     

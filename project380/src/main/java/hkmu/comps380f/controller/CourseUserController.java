@@ -2,15 +2,19 @@ package hkmu.comps380f.controller;
 
 import hkmu.comps380f.dao.CourseRepository;
 import hkmu.comps380f.dao.CourseUserCommentRepository;
+import hkmu.comps380f.dao.CourseUserOptionRepository;
 import hkmu.comps380f.dao.CourseUserRepository;
 import hkmu.comps380f.dao.PollingRepository;
 import hkmu.comps380f.exception.CourseCommentNotFound;
+import hkmu.comps380f.exception.OptionNotFound;
 import hkmu.comps380f.exception.PollingNotFound;
 import hkmu.comps380f.model.CommentForm;
 import hkmu.comps380f.model.CourseUser;
 import hkmu.comps380f.model.Course;
 import hkmu.comps380f.model.CourseUserComment;
+import hkmu.comps380f.model.CourseUserOption;
 import hkmu.comps380f.model.CourseUserPolling;
+import hkmu.comps380f.model.OptionForm;
 import hkmu.comps380f.model.PollingForm;
 import hkmu.comps380f.service.CourseService;
 import java.io.IOException;
@@ -39,6 +43,8 @@ public class CourseUserController {
     private CourseUserCommentRepository courseUserCommentRepository;
     @Resource
     private PollingRepository pollingRepository;
+    @Resource
+    private CourseUserOptionRepository courseUserOptionRepository;
     @Resource
     private CourseRepository courseRepository;
 
@@ -200,6 +206,25 @@ form.getFullName(),form.getPhoneNumber(),form.getDeliveryAddress(),form.getRoles
             courseService.deleteCoursePolling(courseId, pollingId);
         } catch (PollingNotFound ex) {
         }
-        return "redirect:/course/view/" + pollingId;
+        return "redirect:/course/view/" + courseId;
     }
+    @PostMapping("/{courseId}/{pollingId}/addOption")
+    public String addOption(@PathVariable("courseId") long courseId,@PathVariable("pollingId") long pollingId,
+        OptionForm optionForm, Principal principal, ModelMap model) {
+        Course course = courseRepository.findById(courseId).orElse(null);
+        CourseUser user = courseUserRepo.findById(principal.getName()).orElse(null);
+        course.setOptions(courseUserOptionRepository.findByCourseId(courseId));
+
+        CourseUserOption courseUserOption = new CourseUserOption();
+        courseUserOption.setOption(optionForm.getOption());
+        courseUserOption.setPollingId(pollingId);
+        courseUserOption.setCourse(course);
+        courseUserOption.setUser(user);
+        course.addOption(courseUserOption);
+
+        courseRepository.save(course);
+
+        return "redirect:/course/view/" + courseId;
+    }
+  
 }
