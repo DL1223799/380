@@ -13,17 +13,17 @@
     </head>
     <body>
         <c:url value="/user/${course.id}/${pollingId}/addOption" var="addOptionURL"/>
-        <c:forEach items="${pollings}" var="polling">
-            <h1>${polling.question}</h1>
+       
+            <h1>${pollings[pollingId-1].question}</h1>
             <form:form action="${addOptionURL}" method="POST" modelAttribute="newOption">
-        <SELECT id="option" name="option" >
-            <option value="${polling.a}" >${polling.a}</option>
-            <option value="${polling.b}" >${polling.b}</option>
-            <option value="${polling.c}" >${polling.c}</option>
-            <option value="${polling.d}" >${polling.d}</option>
-        </select>
+        ${pollings[pollingId].a}<form:radiobutton path="option" value="${pollings[pollingId].a}"/><br>
+        ${pollings[pollingId].b}<form:radiobutton path="option" value="${pollings[pollingId].b}"/><br>
+        ${pollings[pollingId].c}<form:radiobutton path="option" value="${pollings[pollingId].c}"/><br>
+        ${pollings[pollingId].d}<form:radiobutton path="option" value="${pollings[pollingId].d}"/><br>
+            
+       
             <input type="submit"/><br/><br/><br/>
 </form:form>
-        </c:forEach>
+        
     </body>
 </html>
