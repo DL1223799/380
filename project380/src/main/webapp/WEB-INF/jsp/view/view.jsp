@@ -64,7 +64,7 @@
                             <a href="<c:url value='/user/delete/${course.id}/Polling/${polling.id}' />" >[Delete]</a> total:${numboptions[n]}
                         </security:authorize>
                         <br/>
-                        <c:set var = "n" scope = "session" value = "${n+1}"/>
+                        <c:set var = "n" scope = "session" value = "${n+1}"/>[Details]
                     </c:forEach>
                 </div>
             </c:when>

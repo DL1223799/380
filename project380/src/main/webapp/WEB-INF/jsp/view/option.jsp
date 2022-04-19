@@ -25,7 +25,6 @@
          ${pollings[pollingId-1].d}<form:radiobutton path="option" value="${pollings[pollingId-1].d}"/><br>
       </c:if>
             
-       
             <input type="submit"/><br/><br/><br/>
 </form:form>
         
