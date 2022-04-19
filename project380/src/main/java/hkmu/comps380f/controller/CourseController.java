@@ -3,12 +3,14 @@ package hkmu.comps380f.controller;
 import hkmu.comps380f.dao.CourseRepository;
 import hkmu.comps380f.dao.CourseUserCommentRepository;
 import hkmu.comps380f.dao.CourseUserOptionRepository;
+import hkmu.comps380f.dao.CourseUserRepository;
 import hkmu.comps380f.dao.PollingRepository;
 import hkmu.comps380f.exception.AttachmentNotFound;
 import hkmu.comps380f.exception.CourseNotFound;
 import hkmu.comps380f.model.Attachment;
 import hkmu.comps380f.model.CommentForm;
 import hkmu.comps380f.model.Course;
+import hkmu.comps380f.model.CourseUser;
 import hkmu.comps380f.model.CourseUserComment;
 import hkmu.comps380f.model.CourseUserOption;
 import hkmu.comps380f.model.CourseUserPolling;
@@ -41,7 +43,8 @@ public class CourseController {
 
     @Resource
     private CourseRepository courseRepository;
-
+    @Resource
+    CourseUserRepository courseUserRepo;
     @Resource
     private CourseUserCommentRepository courseUserCommentRepository;
     @Resource
@@ -228,8 +231,7 @@ public class CourseController {
      * "redirect:/course/view"; }
      * //course.setPollings(pollingRepository.findByCourseId(courseId));
      * //model.addAttribute("course", course);
-     * //model.addAttribute("newPolling", new PollingForm()); return "view";
-    }*
+     * //model.addAttribute("newPolling", new PollingForm()); return "view"; }*
      */
     @GetMapping("/polling/{courseId}")
     public String polling(@PathVariable("courseId") long courseId, ModelMap model) {
@@ -264,8 +266,21 @@ public class CourseController {
         return "option";
     }
 
-@GetMapping("/commenthistory")
-    public String commentHistory(ModelMap model) {
+    @GetMapping("/commenthistory")
+    public String commentHistory(Principal principal, ModelMap model) {
+        List<CourseUserComment> comments = courseUserCommentRepository.findAll();
+        CourseUser user = courseUserRepo.findById(principal.getName()).orElse(null);
+        String username = user.getUsername();
+        List<String> userComments = new ArrayList<String>();
+        for (int i = 0; i < comments.size(); i++) {
+            int cid = (int) comments.get(i).getCourseId();
+            String v = courseService.getCourses().get(cid - 1).getSubject();
+            if (username.equals(comments.get(i).getUsername())) {
+                userComments.add("Course: "+v+": "+comments.get(i).getComment());
+            }
+
+        }
+        model.addAttribute("userComments", userComments);
         return "commenthistory";
     }
 }
