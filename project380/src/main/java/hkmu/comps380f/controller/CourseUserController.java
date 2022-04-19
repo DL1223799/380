@@ -245,4 +245,5 @@ public class CourseUserController {
         return "redirect:/course/view/" + courseId;
     }
 
+
 }

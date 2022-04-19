@@ -263,4 +263,9 @@ public class CourseController {
         model.addAttribute("newOption", new OptionForm());
         return "option";
     }
+
+@GetMapping("/commenthistory")
+    public String commentHistory(ModelMap model) {
+        return "commenthistory";
+    }
 }
