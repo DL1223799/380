@@ -294,9 +294,9 @@ public class CourseController {
             int cid = (int) pollings.get(i).getPollingId();
             String v = courseService.getCourses().get(cid - 1).getSubject();
             if (username.equals(pollings.get(i).getUsername())) {
-                userPollings.add("Course: "+v+": "+pollings.get(i).getPollings());
+                userPollings.add("Course: "+v+": "+pollings.get(i).getCourseId());
             }
-l
+
         }
         model.addAttribute("userPollings", userPollings);
         return "votehistory";
