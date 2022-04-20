@@ -59,6 +59,8 @@
                 <i>There are no comment in the system.</i>
             </c:when>
             <c:otherwise>
+                [<a href ="<c:url value ="/course/commenthistory" />">Details</a>]
+                <br/>
                 <c:forEach items="${Commentinfos}" var="commentinfo">
                     ${n+1} Course:<a href="<c:url value="/course/view/${courseDatabase[n].id}" />"><c:out value="${commentinfo}"/></a><br>                   
                     <security:authorize access="hasRole('ADMIN')">

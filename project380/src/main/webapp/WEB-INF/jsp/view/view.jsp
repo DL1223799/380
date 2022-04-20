@@ -61,10 +61,10 @@
                         <a href="<c:url value="/course/option/${course.id}/${polling.id}" />">${polling.question}</a>
                        
                         <security:authorize access="hasRole('ADMIN')">
-                            <a href="<c:url value='/user/delete/${course.id}/Polling/${polling.id}' />" >[Delete]</a> total:${numboptions[n]}
+                            <a href="<c:url value='/user/delete/${course.id}/Polling/${polling.id}' />" >[Delete]</a> total:${numboptions[n]} [<a href="<c:url value="/course/votehistory"/>">Details</a>]
                         </security:authorize>
                         <br/>
-                        <c:set var = "n" scope = "session" value = "${n+1}"/>[Details]
+                        <c:set var = "n" scope = "session" value = "${n+1}"/>
                     </c:forEach>
                 </div>
             </c:when>

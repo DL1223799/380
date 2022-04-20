@@ -283,4 +283,22 @@ public class CourseController {
         model.addAttribute("userComments", userComments);
         return "commenthistory";
     }
+
+@GetMapping("/votehistory")
+    public String voteHistory(Principal principal, ModelMap model) {
+        List<CourseUserOption> pollings = courseUserOptionRepository.findAll();
+        CourseUser user = courseUserRepo.findById(principal.getName()).orElse(null);
+        String username = user.getUsername();
+        List<String> userPollings = new ArrayList<String>();
+        for (int i = 0; i < pollings.size(); i++) {
+            int cid = (int) pollings.get(i).getPollingId();
+            String v = courseService.getCourses().get(cid - 1).getSubject();
+            if (username.equals(pollings.get(i).getUsername())) {
+                userPollings.add("Course: "+v+": "+pollings.get(i).getPollings());
+            }
+l
+        }
+        model.addAttribute("userPollings", userPollings);
+        return "votehistory";
+    }
 }
