@@ -286,15 +286,15 @@ public class CourseController {
 
 @GetMapping("/votehistory")
     public String voteHistory(Principal principal, ModelMap model) {
-        List<CourseUserOption> pollings = courseUserOptionRepository.findAll();
+        List<CourseUserOption> votes = courseUserOptionRepository.findAll();
         CourseUser user = courseUserRepo.findById(principal.getName()).orElse(null);
         String username = user.getUsername();
         List<String> userPollings = new ArrayList<String>();
-        for (int i = 0; i < pollings.size(); i++) {
-            int cid = (int) pollings.get(i).getPollingId();
+        for (int i = 0; i < votes.size(); i++) {
+            int cid = (int) votes.get(i).getPollingId();
             String v = courseService.getCourses().get(cid - 1).getSubject();
-            if (username.equals(pollings.get(i).getUsername())) {
-                userPollings.add("Course: "+v+": "+pollings.get(i).getCourseId());
+            if (username.equals(votes.get(i).getUsername())) {
+                userPollings.add("Course: "+v+": "+votes.get(i).getCourseId());
             }
 
         }

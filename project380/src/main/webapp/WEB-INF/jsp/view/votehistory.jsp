@@ -14,8 +14,8 @@
     </head>
     <body>
         <h1>Vote History</h1>
-        <c:forEach items="${userPollings}" var="userPollings">
-            ${userPollings}<br>
+        <c:forEach items="${userPollings}" var="userPolling">
+            ${userPolling}<br>
         </c:forEach>
     </body>
 </html>
