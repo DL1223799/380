@@ -233,17 +233,30 @@ public class CourseUserController {
         CourseUser user = courseUserRepo.findById(principal.getName()).orElse(null);
         course.setOptions(courseUserOptionRepository.findByCourseId(courseId));
         List<CourseUserOption> options = courseUserOptionRepository.findAll();
-
-        CourseUserOption courseUserOption = new CourseUserOption();
-        courseUserOption.setOption(optionForm.getOption());
-        courseUserOption.setPollingId(pollingId);
-        courseUserOption.setCourse(course);
-        courseUserOption.setUser(user);
-        course.addOption(courseUserOption);
-
+        if (checkvote(pollingId, course.getLectureName())) {
+            CourseUserOption courseUserOption = new CourseUserOption();
+            courseUserOption.setOption(optionForm.getOption());
+            courseUserOption.setPollingId(pollingId);
+            courseUserOption.setCourse(course);
+            courseUserOption.setUser(user);
+            course.addOption(courseUserOption);
+        }
         courseRepository.save(course);
 
         return "redirect:/course/view/" + courseId;
     }
 
+    public boolean checkvote(long pollingId, String username) {
+        List<CourseUserOption> options = courseUserOptionRepository.findAll();
+        if (options.isEmpty()) {
+            return true;
+        } else {
+            /**for (int i = 0; i < options.size(); i++) {
+                if (options.get(i).getUsername().equals(username) &&(int)pollingId==(int)options.get(i).getPollingId()) {
+                    return false;
+                }
+            }**/
+        }
+        return true;
+    }
 }
