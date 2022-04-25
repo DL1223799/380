@@ -17,19 +17,13 @@ import hkmu.comps380f.model.OptionForm;
 import hkmu.comps380f.model.PollingForm;
 import hkmu.comps380f.service.CourseService;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+
 import javax.annotation.Resource;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,6 +50,8 @@ public class CourseUserController {
     private CourseUserOptionRepository courseUserOptionRepository;
     @Resource
     private CourseRepository courseRepository;
+
+    private final Logger logger = LogManager.getLogger(this.getClass());
 
     @GetMapping({"", "/list"})
     public String list(ModelMap model) {
@@ -157,12 +153,27 @@ public class CourseUserController {
         CourseUser user = new CourseUser(form.getUsername(), form.getPassword(),
                 form.getFullName(), form.getPhoneNumber(), form.getDeliveryAddress(), form.getRoles());
         courseUserRepo.save(user);
+        logger.info("User " + form.getUsername() + " created.");
+
         return new RedirectView("/user/list", true);
     }
 
-    @GetMapping("/delete/{username}")
-    public View deleteCourse(@PathVariable("username") String username) {
+    @GetMapping("/delete")
+    public View delete(@PathVariable("username") String username) {
         courseUserRepo.delete(courseUserRepo.findById(username).orElse(null));
+        logger.info("User " + username + " deleted.");
+        return new RedirectView("/user/list", true);
+    }
+
+//    @GetMapping("/delete/{username}")
+//    public View deleteCourse(@PathVariable("username") String username) {
+//        courseUserRepo.delete(courseUserRepo.findById(username).orElse(null));
+//        return new RedirectView("/user/list", true);
+//    }
+
+    @GetMapping("/delete/{courseId}")
+    public View deleteCourse(@PathVariable("courseId") String courseId) {
+        courseUserRepo.delete(courseUserRepo.findById(courseId).orElse(null));
         return new RedirectView("/user/list", true);
     }
 
@@ -251,11 +262,12 @@ public class CourseUserController {
         if (options.isEmpty()) {
             return true;
         } else {
-            /**for (int i = 0; i < options.size(); i++) {
-                if (options.get(i).getUsername().equals(username) &&(int)pollingId==(int)options.get(i).getPollingId()) {
-                    return false;
-                }
-            }**/
+            /**
+             * for (int i = 0; i < options.size(); i++) { if
+             * (options.get(i).getUsername().equals(username)
+             * &&(int)pollingId==(int)options.get(i).getPollingId()) { return
+             * false; } }*
+             */
         }
         return true;
     }
