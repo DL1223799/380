@@ -252,14 +252,14 @@ public class CourseController {
     public String option(@PathVariable("courseId") long courseId, @PathVariable("pollingId") long pollingId, ModelMap model) {
         //model.addAttribute("courseDatabase", courseService.getCourses());
         Course course = courseService.getCourse(courseId);
-        List<CourseUserPolling> pollings = pollingRepository.findAll();
+        CourseUserPolling polling = pollingRepository.findById(pollingId).orElse(null);
         if (course == null) {
             return "redirect:/course/view";
         }
         CourseUserOption option = new CourseUserOption();
         model.addAttribute("courseDatabase", courseService.getCourses());
         model.addAttribute("course", course);
-        model.addAttribute("pollings", pollings);
+        model.addAttribute("polling", polling);
         model.addAttribute("pollingId", pollingId);
         model.addAttribute("option", option);
         model.addAttribute("newOption", new OptionForm());
@@ -276,7 +276,7 @@ public class CourseController {
             int cid = (int) comments.get(i).getCourseId();
             String v = courseService.getCourses().get(cid - 1).getSubject();
             if (username.equals(comments.get(i).getUsername())) {
-                userComments.add("Course: "+v+": "+comments.get(i).getComment());
+                userComments.add("Course: " + v + ": " + comments.get(i).getComment());
             }
 
         }
@@ -284,18 +284,18 @@ public class CourseController {
         return "commenthistory";
     }
 
-@GetMapping("/votehistory")
-    public String voteHistory(Principal principal, ModelMap model) {
-        List<CourseUserOption> votes = courseUserOptionRepository.findAll();
+    @GetMapping("/votehistory/{pollingId}")
+    public String voteHistory(Principal principal, ModelMap model,@PathVariable("pollingId") long pollingId) {
+        List<CourseUserOption> votes = courseUserOptionRepository.findByPollingId(pollingId);
         CourseUser user = courseUserRepo.findById(principal.getName()).orElse(null);
         String username = user.getUsername();
         List<String> userPollings = new ArrayList<String>();
         for (int i = 0; i < votes.size(); i++) {
-            int cid = (int) votes.get(i).getPollingId();
-
-            String v = courseService.getCourses().get(cid - 1).getSubject();
+//            int cid = (int) votes.get(i).getPollingId();
+            String v = votes.get(i).getCourse().getSubject();
+//            String v = courseService.getCourses().get(cid - 1).getSubject();
             if (username.equals(votes.get(i).getUsername())) {
-                userPollings.add("Vote title: "+v+": "+votes.get(i).getCourseId()+votes.get(i).getUsername()+votes.get(i).getOption());
+                userPollings.add("Vote title: " + v + ": " + votes.get(i).getCourseId() + votes.get(i).getUsername() + votes.get(i).getOption());
             }
 
         }
