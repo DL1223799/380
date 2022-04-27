@@ -16,128 +16,136 @@ import org.hibernate.annotations.FetchMode;
 
 @Entity
 public class Course implements Serializable {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    
     @Column(name = "name")
     private String lectureName;
-
+    
     private String subject;
-
+    
     private String body;
-
+    
     @OneToMany(mappedBy = "course", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     private List<Attachment> attachments = new ArrayList<>();
-
+    
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     private List<CourseUserComment> comments = new ArrayList<>();
-
+    
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     private List<CourseUserPolling> pollings = new ArrayList<>();
-
-    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY,
+    
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     private List<CourseUserOption> options = new ArrayList<>();
-
+    
     public void setOptions(List<CourseUserOption> options) {
         this.options = options;
     }
-
+    
     public List<CourseUserOption> getOptions() {
         return options;
     }
-
+    
     public void setPollings(List<CourseUserPolling> pollings) {
         this.pollings = pollings;
     }
-
+    
     public List<CourseUserPolling> getPollings() {
         return pollings;
     }
-
+    
     public void setComments(List<CourseUserComment> comments) {
         this.comments = comments;
     }
-
+    
     public List<CourseUserComment> getComments() {
         return comments;
     }
+
     // getters and setters of all properties
     public long getId() {
         return id;
     }
-
+    
     public void setId(long id) {
         this.id = id;
     }
-
+    
     public String getLectureName() {
         return lectureName;
     }
-
+    
     public void setLectureName(String lectureName) {
         this.lectureName = lectureName;
     }
-
+    
     public String getSubject() {
         return subject;
     }
-
+    
     public void setSubject(String subject) {
         this.subject = subject;
     }
-
+    
     public String getBody() {
         return body;
     }
-
+    
     public void setBody(String body) {
         this.body = body;
     }
-
+    
     public List<Attachment> getAttachments() {
         return attachments;
     }
-
+    
     public void setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
     }
-
+    
     public void deleteAttachment(Attachment attachment) {
         attachment.setCourse(null);
         this.attachments.remove(attachment);
     }
+
     public void addComment(CourseUserComment comment) {
         comments.add(comment);
     }
+
     public void deleteComment(CourseUserComment comment) {
         comment.setCourse(null);
         comment.setUser(null);
         comments.remove(comment);
     }
+
     public void addPolling(CourseUserPolling polling) {
         pollings.add(polling);
     }
+
     public void deletePolling(CourseUserPolling polling) {
         polling.setCourse(null);
         polling.setUser(null);
         pollings.remove(polling);
     }
-public void addOption(CourseUserOption option) {
+
+    public void addOption(CourseUserOption option) {
         options.add(option);
     }
+
     public void deleteOption(CourseUserOption option) {
         option.setCourse(null);
         option.setUser(null);
+        option.setPolling(null);
         options.remove(option);
     }
 }

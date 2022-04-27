@@ -9,14 +9,21 @@ package hkmu.comps380f.model;
  * @author user
  */
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "Course_Polling")
@@ -26,29 +33,51 @@ public class CourseUserPolling implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "polling_id")
     private long id;
-    @Column(name="course_id", insertable=false, updatable=false)
+    @Column(name = "course_id", insertable = false, updatable = false)
     private long courseId;
-    
-    @Column(name="question")
+
+    @Column(name = "question")
     private String question;
-    @Column(name="a")
+    @Column(name = "a")
     private String a;
-    @Column(name="b")
+    @Column(name = "b")
     private String b;
-    @Column(name="c")
+    @Column(name = "c")
     private String c;
-    @Column(name="d")
+    @Column(name = "d")
     private String d;
-        
-    @Column(name="username", insertable=false, updatable=false)
+
+    @Column(name = "username", insertable = false, updatable = false)
     private String username;
 
     @ManyToOne
-    @JoinColumn(name="username")
+    @JoinColumn(name = "username")
     private CourseUser user;
     @ManyToOne
-    @JoinColumn(name="course_id")
+    @JoinColumn(name = "course_id")
     private Course course;
+    @OneToMany(mappedBy = "polling", fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(FetchMode.SUBSELECT)
+    private List<CourseUserOption> options = new ArrayList<>();
+
+    public void setOptions(List<CourseUserOption> options) {
+        this.options = options;
+    }
+
+    public List<CourseUserOption> getOptions() {
+        return options;
+    }
+
+    public void addOption(CourseUserOption option) {
+        options.add(option);
+    }
+
+    public void deleteOption(CourseUserOption option) {
+        option.setCourse(null);
+        option.setUser(null);
+        options.remove(option);
+    }
 
     public long getId() {
         return id;
@@ -129,6 +158,4 @@ public class CourseUserPolling implements Serializable {
     public void setCourse(Course course) {
         this.course = course;
     }
-    
 }
-

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CourseUserOptionRepository extends JpaRepository<CourseUserOption, Long> {
 
     public List<CourseUserOption> findByCourseId(Long id);
-    
+    public List<CourseUserOption> findByPollingId(Long id);
     
 
 }

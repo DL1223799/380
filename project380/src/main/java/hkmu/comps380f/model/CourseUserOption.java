@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -33,7 +32,7 @@ public class CourseUserOption implements Serializable {
     @Column(name="opt")
     private String option;
 
-    @Column(name="polling_id")
+    @Column(name="polling_id", insertable=false, updatable=false)
     private long pollingId;
     
     @ManyToOne
@@ -43,6 +42,10 @@ public class CourseUserOption implements Serializable {
     @ManyToOne
     @JoinColumn(name="course_id")
     private Course course;
+    @ManyToOne
+    @JoinColumn(name="polling_id")
+    private CourseUserPolling polling;
+
     
     public long getId() {
         return id;
@@ -102,6 +105,14 @@ public class CourseUserOption implements Serializable {
 
     public void setPollingId(long pollingId) {
         this.pollingId = pollingId;
+    }
+
+    public CourseUserPolling getPolling() {
+        return polling;
+    }
+
+    public void setPolling(CourseUserPolling polling) {
+        this.polling = polling;
     }
     
     

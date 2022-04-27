@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class CourseService {
-
+    
     @Resource
     private CourseRepository courseRepo;
     @Resource
@@ -35,16 +35,17 @@ public class CourseService {
     private PollingRepository pollingRepository;
     @Resource
     private CourseUserOptionRepository courseUserOptionRepository;
+    
     @Transactional
     public List<Course> getCourses() {
         return courseRepo.findAll();
     }
-
+    
     @Transactional
     public Course getCourse(long id) {
         return courseRepo.findById(id).orElse(null);
     }
-
+    
     @Transactional(rollbackFor = CourseNotFound.class)
     public void delete(long id) throws CourseNotFound {
         Course deletedCourse = courseRepo.findById(id).orElse(null);
@@ -53,7 +54,7 @@ public class CourseService {
         }
         courseRepo.delete(deletedCourse);
     }
-
+    
     @Transactional(rollbackFor = AttachmentNotFound.class)
     public void deleteAttachment(long courseId, String name) throws AttachmentNotFound {
         Course course = courseRepo.findById(courseId).orElse(null);
@@ -66,7 +67,7 @@ public class CourseService {
         }
         throw new AttachmentNotFound();
     }
-
+    
     @Transactional
     public long createCourse(String lectureName, String subject,
             String body, List<MultipartFile> attachments) throws IOException {
@@ -74,7 +75,7 @@ public class CourseService {
         course.setLectureName(lectureName);
         course.setSubject(subject);
         course.setBody(body);
-
+        
         for (MultipartFile filePart : attachments) {
             Attachment attachment = new Attachment();
             attachment.setName(filePart.getOriginalFilename());
@@ -90,7 +91,7 @@ public class CourseService {
         Course savedCourse = courseRepo.save(course);
         return savedCourse.getId();
     }
-
+    
     @Transactional(rollbackFor = CourseNotFound.class)
     public void updateCourse(long id, String subject,
             String body, List<MultipartFile> attachments)
@@ -99,10 +100,10 @@ public class CourseService {
         if (updatedCourse == null) {
             throw new CourseNotFound();
         }
-
+        
         updatedCourse.setSubject(subject);
         updatedCourse.setBody(body);
-
+        
         for (MultipartFile filePart : attachments) {
             Attachment attachment = new Attachment();
             attachment.setName(filePart.getOriginalFilename());
@@ -117,11 +118,12 @@ public class CourseService {
         }
         courseRepo.save(updatedCourse);
     }
-@Transactional(rollbackFor = CourseCommentNotFound.class)
+    
+    @Transactional(rollbackFor = CourseCommentNotFound.class)
     public void deleteCourseComment(long courseId, long commentId) throws CourseCommentNotFound {
         Course course = courseRepo.findById(courseId).orElse(null);
         course.setComments(courseUserCommentRepository.findByCourseId(courseId));
-
+        
         for (CourseUserComment courseUserComment : course.getComments()) {
             if (courseUserComment.getId() == commentId) {
                 course.deleteComment(courseUserComment);
@@ -131,13 +133,18 @@ public class CourseService {
         }
         throw new CourseCommentNotFound();
     }
-@Transactional(rollbackFor = PollingNotFound.class)
+    
+    @Transactional(rollbackFor = PollingNotFound.class)
     public void deleteCoursePolling(long courseId, long pollingId) throws PollingNotFound {
         Course course = courseRepo.findById(courseId).orElse(null);
         course.setPollings(pollingRepository.findByCourseId(courseId));
-
+        
         for (CourseUserPolling courseUserPolling : course.getPollings()) {
             if (courseUserPolling.getId() == pollingId) {
+                List<CourseUserOption> options = courseUserOptionRepository.findByPollingId(pollingId);
+                for (CourseUserOption option : options) {
+                    course.deleteOption(option);
+                }
                 course.deletePolling(courseUserPolling);
                 courseRepo.save(course);
                 return;
@@ -145,11 +152,12 @@ public class CourseService {
         }
         throw new PollingNotFound();
     }
-@Transactional(rollbackFor = OptionNotFound.class)
+    
+    @Transactional(rollbackFor = OptionNotFound.class)
     public void deleteCourseOption(long courseId, long optionId) throws OptionNotFound {
         Course course = courseRepo.findById(courseId).orElse(null);
         course.setOptions(courseUserOptionRepository.findByCourseId(courseId));
-
+        
         for (CourseUserOption courseUserOption : course.getOptions()) {
             if (courseUserOption.getId() == optionId) {
                 course.deleteOption(courseUserOption);

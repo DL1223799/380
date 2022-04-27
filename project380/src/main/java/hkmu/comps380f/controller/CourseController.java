@@ -292,6 +292,7 @@ public class CourseController {
         List<String> userPollings = new ArrayList<String>();
         for (int i = 0; i < votes.size(); i++) {
             int cid = (int) votes.get(i).getPollingId();
+
             String v = courseService.getCourses().get(cid - 1).getSubject();
             if (username.equals(votes.get(i).getUsername())) {
                 userPollings.add("Vote title: "+v+": "+votes.get(i).getCourseId()+votes.get(i).getUsername()+votes.get(i).getOption());

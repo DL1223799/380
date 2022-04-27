@@ -170,7 +170,6 @@ public class CourseUserController {
 //        courseUserRepo.delete(courseUserRepo.findById(username).orElse(null));
 //        return new RedirectView("/user/list", true);
 //    }
-
     @GetMapping("/delete/{courseId}")
     public View deleteCourse(@PathVariable("courseId") String courseId) {
         courseUserRepo.delete(courseUserRepo.findById(courseId).orElse(null));
@@ -245,7 +244,9 @@ public class CourseUserController {
         course.setOptions(courseUserOptionRepository.findByCourseId(courseId));
         List<CourseUserOption> options = courseUserOptionRepository.findAll();
         if (checkvote(pollingId, course.getLectureName())) {
+            CourseUserPolling courseUserPolling = pollingRepository.findById(pollingId).orElse(null);
             CourseUserOption courseUserOption = new CourseUserOption();
+            courseUserOption.setPolling(courseUserPolling);
             courseUserOption.setOption(optionForm.getOption());
             courseUserOption.setPollingId(pollingId);
             courseUserOption.setCourse(course);
