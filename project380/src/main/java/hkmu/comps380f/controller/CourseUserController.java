@@ -252,24 +252,47 @@ public class CourseUserController {
             courseUserOption.setCourse(course);
             courseUserOption.setUser(user);
             course.addOption(courseUserOption);
-        }
+        } else {CourseUserOption courseUserOption = new CourseUserOption();
+            logger.info("Done");
+            courseUserOption.setOption(checkOption(pollingId, principal.getName()));}
         courseRepository.save(course);
 
         return "redirect:/course/view/" + courseId;
     }
+
+    /*@PostMapping("/edit/{courseId}/Polling/{pollingId}")
+    public String editPolling(@PathVariable("courseId") long courseId, @PathVariable("pollingId") long pollingId,
+            OptionForm optionForm, Principal principal) {
+        List<CourseUserOption> option = courseUserOptionRepository.findByPollingId(pollingId);
+        CourseUserOption courseUserOption = new CourseUserOption();
+        String optionStr = option.get((int) pollingId).toString();
+        courseUserOption.setOption(optionStr);
+
+        return "redirect/course/view/" + courseId;
+    }*/
 
     public boolean checkvote(long pollingId, String username) {
         List<CourseUserOption> options = courseUserOptionRepository.findAll();
         if (options.isEmpty()) {
             return true;
         } else {
-            /**
-             * for (int i = 0; i < options.size(); i++) { if
-             * (options.get(i).getUsername().equals(username)
-             * &&(int)pollingId==(int)options.get(i).getPollingId()) { return
-             * false; } }*
-             */
+            for (int i = 0; i < options.size(); i++) { 
+            if (options.get(i).getUsername().equals(username) && (int) pollingId == (int) options.get(i).getPollingId()) { 
+                
+                return false; } }
         }
         return true;
     }
-}
+
+    public String checkOption(@PathVariable("pollingId") long pollingId, String username) {
+        List<CourseUserOption> options = courseUserOptionRepository.findByPollingId(pollingId);
+        String option = "";
+        for (int i = 0; i < options.size(); i++) { 
+            if (options.get(i).getUsername().equals(username)) {
+                option = options.get(i).getOption();
+         }
+        }
+       return option;
+      }
+    }
+
