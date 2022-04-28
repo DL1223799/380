@@ -13,16 +13,16 @@
     </head>
     <body>
         <c:url value="/user/${course.id}/${pollingId}/addOption" var="addOptionURL"/>
-            
-            <h1>${polling.question}</h1>
+       
+            <h1>${pollings[pollingId-1].question}</h1>
             <form:form action="${addOptionURL}" method="POST" modelAttribute="newOption">
-        ${polling.a}<form:radiobutton path="option" value="${polling.a}"/><br>
-        ${polling.b}<form:radiobutton path="option" value="${polling.b}"/><br>
-        <c:if test = "${!empty polling.c}">
-         ${polling.c}<form:radiobutton path="option" value="${polling.c}"/><br>
+        ${pollings[pollingId-1].a}<form:radiobutton path="option" value="${pollings[pollingId-1].a}"/><br>
+        ${pollings[pollingId-1].b}<form:radiobutton path="option" value="${pollings[pollingId-1].b}"/><br>
+        <c:if test = "${!empty pollings[pollingId-1].c}">
+         ${pollings[pollingId-1].c}<form:radiobutton path="option" value="${pollings[pollingId-1].c}"/><br>
       </c:if>
-        <c:if test = "${!empty polling.d}">
-         ${polling.d}<form:radiobutton path="option" value="${polling.d}"/><br>
+        <c:if test = "${!empty pollings[pollingId-1].d}">
+         ${pollings[pollingId-1].d}<form:radiobutton path="option" value="${pollings[pollingId-1].d}"/><br>
       </c:if>
             
             <input type="submit"/><br/><br/><br/>
