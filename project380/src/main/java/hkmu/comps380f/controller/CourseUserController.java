@@ -22,11 +22,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -86,10 +91,19 @@ public class CourseUserController {
 
     public static class Form {
 
+        @NotEmpty(message = "Please enter your user name.")
         private String username;
+        @NotEmpty(message = "Please enter your password.")
+        @Size(min = 6, max = 15,
+                message = "Your password must be between {min} and {max} characters.")
         private String password;
+        @NotEmpty(message = "Please enter your full name.")
         private String fullName;
+        @NotEmpty(message = "Please enter your phone no.")
+        @Size(min = 8, max = 8,
+                message = "Your phone no must be {min} characters.")
         private String phoneNumber;
+        @NotEmpty(message = "Please enter your address.")
         private String deliveryAddress;
         private String[] roles;
 
@@ -149,13 +163,18 @@ public class CourseUserController {
     }
 
     @PostMapping("/create")
-    public View create(Form form) throws IOException {
+    public String create(@ModelAttribute("courseUser") @Valid Form form, BindingResult result) throws IOException {
+
+        if (result.hasErrors()) {
+            return "addUser";
+        }
         CourseUser user = new CourseUser(form.getUsername(), form.getPassword(),
                 form.getFullName(), form.getPhoneNumber(), form.getDeliveryAddress(), form.getRoles());
         courseUserRepo.save(user);
         logger.info("User " + form.getUsername() + " created.");
 
-        return new RedirectView("/user/list", true);
+//        return new RedirectView("/user/list", true);
+        return "redirect:/user/list";
     }
 
     @GetMapping("/delete")
@@ -252,9 +271,11 @@ public class CourseUserController {
             courseUserOption.setCourse(course);
             courseUserOption.setUser(user);
             course.addOption(courseUserOption);
-        } else {CourseUserOption courseUserOption = new CourseUserOption();
+        } else {
+            CourseUserOption courseUserOption = new CourseUserOption();
             logger.info("Done");
-            courseUserOption.setOption(checkOption(pollingId, principal.getName()));}
+            courseUserOption.setOption(checkOption(pollingId, principal.getName()));
+        }
         courseRepository.save(course);
 
         return "redirect:/course/view/" + courseId;
@@ -270,16 +291,17 @@ public class CourseUserController {
 
         return "redirect/course/view/" + courseId;
     }*/
-
     public boolean checkvote(long pollingId, String username) {
         List<CourseUserOption> options = courseUserOptionRepository.findAll();
         if (options.isEmpty()) {
             return true;
         } else {
-            for (int i = 0; i < options.size(); i++) { 
-            if (options.get(i).getUsername().equals(username) && (int) pollingId == (int) options.get(i).getPollingId()) { 
-                
-                return false; } }
+            for (int i = 0; i < options.size(); i++) {
+                if (options.get(i).getUsername().equals(username) && (int) pollingId == (int) options.get(i).getPollingId()) {
+
+                    return false;
+                }
+            }
         }
         return true;
     }
@@ -287,12 +309,11 @@ public class CourseUserController {
     public String checkOption(@PathVariable("pollingId") long pollingId, String username) {
         List<CourseUserOption> options = courseUserOptionRepository.findByPollingId(pollingId);
         String option = "";
-        for (int i = 0; i < options.size(); i++) { 
+        for (int i = 0; i < options.size(); i++) {
             if (options.get(i).getUsername().equals(username)) {
                 option = options.get(i).getOption();
-         }
+            }
         }
-       return option;
-      }
+        return option;
     }
-
+}
