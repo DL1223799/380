@@ -16,6 +16,7 @@ import hkmu.comps380f.model.CourseUserPolling;
 import hkmu.comps380f.model.OptionForm;
 import hkmu.comps380f.model.PollingForm;
 import hkmu.comps380f.service.CourseService;
+import hkmu.comps380f.validator.UserValidator;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -55,6 +57,8 @@ public class CourseUserController {
     private CourseUserOptionRepository courseUserOptionRepository;
     @Resource
     private CourseRepository courseRepository;
+    @Autowired
+    private UserValidator userValidator;
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -164,7 +168,7 @@ public class CourseUserController {
 
     @PostMapping("/create")
     public String create(@ModelAttribute("courseUser") @Valid Form form, BindingResult result) throws IOException {
-
+        userValidator.validate(form, result);
         if (result.hasErrors()) {
             return "addUser";
         }
