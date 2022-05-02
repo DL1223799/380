@@ -298,12 +298,13 @@ public class CourseUserController {
     public boolean checkvote(long pollingId, String username) {
         List<CourseUserOption> options = courseUserOptionRepository.findAll();
         int count = 0;
+        Long pollingid =pollingId;
         for (int i = 0; i < options.size(); i++) {
-            if (options.get(i).getPolling().equals(pollingId) && username.equals(options.get(i).getUsername())) {
+            if (pollingid.equals(options.get(i).getPollingId()) &&username.equals(options.get(i).getUsername())) {
                 count++;
             }
         }
-        if (count > 1) {
+        if (count <1) {
             return true;
         } else {
             return false;
