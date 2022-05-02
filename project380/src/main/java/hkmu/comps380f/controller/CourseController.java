@@ -249,17 +249,22 @@ public class CourseController {
     }
 
     @GetMapping("/option/{courseId}/{pollingId}")
-    public String option(@PathVariable("courseId") long courseId, @PathVariable("pollingId") long pollingId,Principal principal, ModelMap model) {
+    public String option(@PathVariable("courseId") long courseId, @PathVariable("pollingId") long pollingId, Principal principal, ModelMap model) {
         //model.addAttribute("courseDatabase", courseService.getCourses());
         Course course = courseService.getCourse(courseId);
         CourseUserPolling polling = pollingRepository.findById(pollingId).orElse(null);
         if (course == null) {
             return "redirect:/course/view";
         }
-        List<String>voted=new ArrayList<String>();
-        List vote=courseUserOptionRepository.findByPollingId(pollingId);
-
+        long voted=-1;
+        List<CourseUserOption> votes = courseUserOptionRepository.findByPollingId(pollingId);
+        for (int i = 0; i < votes.size(); i++) {
+            if (principal.getName().equals(votes.get(i).getUsername())) {
+                voted=votes.get(i).getId();
+            }
+        }
         CourseUserOption option = new CourseUserOption();
+        model.addAttribute("voted", voted);
         model.addAttribute("courseDatabase", courseService.getCourses());
         model.addAttribute("course", course);
         model.addAttribute("polling", polling);
@@ -288,7 +293,7 @@ public class CourseController {
     }
 
     @GetMapping("/votehistory/{pollingId}")
-    public String voteHistory(Principal principal, ModelMap model,@PathVariable("pollingId") long pollingId) {
+    public String voteHistory(Principal principal, ModelMap model, @PathVariable("pollingId") long pollingId) {
         List<CourseUserOption> votes = courseUserOptionRepository.findByPollingId(pollingId);
         CourseUser user = courseUserRepo.findById(principal.getName()).orElse(null);
         String username = user.getUsername();

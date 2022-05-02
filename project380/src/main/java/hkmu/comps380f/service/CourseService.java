@@ -24,7 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class CourseService {
-    
+    @Resource
+private CourseUserOptionRepository courseUserOptionRepository;
     @Resource
     private CourseRepository courseRepo;
     @Resource
@@ -33,8 +34,7 @@ public class CourseService {
     private CourseUserCommentRepository courseUserCommentRepository;
     @Resource
     private PollingRepository pollingRepository;
-    @Resource
-    private CourseUserOptionRepository courseUserOptionRepository;
+
     
     @Transactional
     public List<Course> getCourses() {
@@ -167,4 +167,14 @@ public class CourseService {
         }
         throw new OptionNotFound();
     }
+ @Transactional(rollbackFor = CourseNotFound.class)
+    public void updateOption(long id, String option) throws IOException, OptionNotFound {
+        CourseUserOption updatedOption = courseUserOptionRepository.findById(id).orElse(null);
+        if (updatedOption == null) {
+            throw new OptionNotFound();
+        }
+        updatedOption.setOption(option);
+courseUserOptionRepository.save(updatedOption);
+    
+}
 }

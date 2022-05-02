@@ -12,10 +12,13 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <c:url value="/user/${course.id}/${pollingId}/addOption" var="addOptionURL"/>
+        <c:url value="/user/${course.id}/${pollingId}/addOption" var="URL"/>
+        <c:if test="${voted>=0}">
+            <c:url value="/user/${course.id}/${pollingId}/${voted}/changeOption" var="URL"/>
+        </c:if>
             
             <h1>${polling.question}</h1>
-            <form:form action="${addOptionURL}" method="POST" modelAttribute="newOption">
+            <form:form action="${URL}" method="POST" modelAttribute="newOption">
         ${polling.a}<form:radiobutton path="option" value="${polling.a}"/><br>
         ${polling.b}<form:radiobutton path="option" value="${polling.b}"/><br>
         <c:if test = "${!empty polling.c}">

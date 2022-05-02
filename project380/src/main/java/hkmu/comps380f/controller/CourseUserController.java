@@ -6,6 +6,7 @@ import hkmu.comps380f.dao.CourseUserOptionRepository;
 import hkmu.comps380f.dao.CourseUserRepository;
 import hkmu.comps380f.dao.PollingRepository;
 import hkmu.comps380f.exception.CourseCommentNotFound;
+import hkmu.comps380f.exception.OptionNotFound;
 import hkmu.comps380f.exception.PollingNotFound;
 import hkmu.comps380f.model.CommentForm;
 import hkmu.comps380f.model.CourseUser;
@@ -284,6 +285,15 @@ public class CourseUserController {
 
         return "redirect:/course/view/" + courseId;
     }
+@PostMapping("/{courseId}/{pollingId}/{voted}/changeOption")
+    public String changeOption(@PathVariable("courseId") long courseId, @PathVariable("pollingId") long pollingId,
+@PathVariable("voted") long voted,
+        OptionForm optionForm, Principal principal, ModelMap model) throws IOException, OptionNotFound {
+String option=optionForm.getOption();
+        courseService.updateOption(voted, option);
+        return "redirect:/course/view/" + courseId;
+    }
+
 
     /*@PostMapping("/edit/{courseId}/Polling/{pollingId}")
     public String editPolling(@PathVariable("courseId") long courseId, @PathVariable("pollingId") long pollingId,
