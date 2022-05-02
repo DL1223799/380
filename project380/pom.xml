@@ -151,6 +151,7 @@
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.36</version>
         </dependency>
+
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
@@ -167,6 +168,7 @@
             <version>7.0</version>
             <type>jar</type>
         </dependency>
+
     </dependencies>
 
     <build>
