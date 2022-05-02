@@ -249,16 +249,13 @@ public class CourseController {
     }
 
     @GetMapping("/option/{courseId}/{pollingId}")
-    public String option(@PathVariable("courseId") long courseId, @PathVariable("pollingId") long pollingId,Principal principal, ModelMap model) {
+    public String option(@PathVariable("courseId") long courseId, @PathVariable("pollingId") long pollingId, ModelMap model) {
         //model.addAttribute("courseDatabase", courseService.getCourses());
         Course course = courseService.getCourse(courseId);
         CourseUserPolling polling = pollingRepository.findById(pollingId).orElse(null);
         if (course == null) {
             return "redirect:/course/view";
         }
-        List<String>voted=new ArrayList<String>();
-        List vote=courseUserOptionRepository.findByPollingId(pollingId);
-
         CourseUserOption option = new CourseUserOption();
         model.addAttribute("courseDatabase", courseService.getCourses());
         model.addAttribute("course", course);
