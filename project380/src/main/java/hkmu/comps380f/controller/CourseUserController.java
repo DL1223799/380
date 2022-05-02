@@ -150,6 +150,7 @@ public class CourseUserController {
 
     @PostMapping("/create")
 <<<<<<< HEAD
+<<<<<<< HEAD
     public View create(Form form) throws IOException {
 =======
     public String create(@ModelAttribute("courseUser") @Valid Form form, BindingResult result) throws IOException {
@@ -158,6 +159,9 @@ public class CourseUserController {
             return "addUser";
         }
 >>>>>>> parent of 1c8d028 (prevent same user done)
+=======
+    public View create(Form form) throws IOException {
+>>>>>>> parent of a606910 (register validation work)
         CourseUser user = new CourseUser(form.getUsername(), form.getPassword(),
                 form.getFullName(), form.getPhoneNumber(), form.getDeliveryAddress(), form.getRoles());
         courseUserRepo.save(user);
@@ -259,11 +263,33 @@ public class CourseUserController {
             courseUserOption.setCourse(course);
             courseUserOption.setUser(user);
             course.addOption(courseUserOption);
+<<<<<<< HEAD
             courseRepository.save(course);
         }
         return "redirect:/course/view/" + courseId;
     }
 
+=======
+        } else {CourseUserOption courseUserOption = new CourseUserOption();
+            logger.info("Done");
+            courseUserOption.setOption(checkOption(pollingId, principal.getName()));}
+        courseRepository.save(course);
+
+        return "redirect:/course/view/" + courseId;
+    }
+
+    /*@PostMapping("/edit/{courseId}/Polling/{pollingId}")
+    public String editPolling(@PathVariable("courseId") long courseId, @PathVariable("pollingId") long pollingId,
+            OptionForm optionForm, Principal principal) {
+        List<CourseUserOption> option = courseUserOptionRepository.findByPollingId(pollingId);
+        CourseUserOption courseUserOption = new CourseUserOption();
+        String optionStr = option.get((int) pollingId).toString();
+        courseUserOption.setOption(optionStr);
+
+        return "redirect/course/view/" + courseId;
+    }*/
+
+>>>>>>> parent of a606910 (register validation work)
     public boolean checkvote(long pollingId, String username) {
         List<CourseUserOption> options = courseUserOptionRepository.findAll();
         int count = 0;
@@ -277,8 +303,28 @@ count+=1;
         if (count < 1) {
             return true;
         } else {
+<<<<<<< HEAD
             return false;
+=======
+            for (int i = 0; i < options.size(); i++) { 
+            if (options.get(i).getUsername().equals(username) && (int) pollingId == (int) options.get(i).getPollingId()) { 
+                
+                return false; } }
+>>>>>>> parent of a606910 (register validation work)
         }
 
+<<<<<<< HEAD
+=======
+    public String checkOption(@PathVariable("pollingId") long pollingId, String username) {
+        List<CourseUserOption> options = courseUserOptionRepository.findByPollingId(pollingId);
+        String option = "";
+        for (int i = 0; i < options.size(); i++) { 
+            if (options.get(i).getUsername().equals(username)) {
+                option = options.get(i).getOption();
+         }
+        }
+       return option;
+      }
+>>>>>>> parent of a606910 (register validation work)
     }
-}
+
