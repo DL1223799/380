@@ -266,7 +266,7 @@ public class CourseUserController {
         CourseUser user = courseUserRepo.findById(principal.getName()).orElse(null);
         course.setOptions(courseUserOptionRepository.findByCourseId(courseId));
         List<CourseUserOption> options = courseUserOptionRepository.findAll();
-        if (checkvote(pollingId, course.getLectureName())) {
+        if (checkvote(pollingId, principal.getName())) {
             CourseUserPolling courseUserPolling = pollingRepository.findById(pollingId).orElse(null);
             CourseUserOption courseUserOption = new CourseUserOption();
             courseUserOption.setPolling(courseUserPolling);
@@ -297,17 +297,17 @@ public class CourseUserController {
     }*/
     public boolean checkvote(long pollingId, String username) {
         List<CourseUserOption> options = courseUserOptionRepository.findAll();
-        if (options.isEmpty()) {
-            return true;
-        } else {
-            for (int i = 0; i < options.size(); i++) {
-                if (options.get(i).getUsername().equals(username) && (int) pollingId == (int) options.get(i).getPollingId()) {
-
-                    return false;
-                }
+        int count = 0;
+        for (int i = 0; i < options.size(); i++) {
+            if (options.get(i).getPolling().equals(pollingId) && username.equals(options.get(i).getUsername())) {
+                count++;
             }
         }
-        return true;
+        if (count > 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public String checkOption(@PathVariable("pollingId") long pollingId, String username) {
