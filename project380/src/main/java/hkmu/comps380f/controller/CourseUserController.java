@@ -149,7 +149,15 @@ public class CourseUserController {
     }
 
     @PostMapping("/create")
+<<<<<<< HEAD
     public View create(Form form) throws IOException {
+=======
+    public String create(@ModelAttribute("courseUser") @Valid Form form, BindingResult result) throws IOException {
+
+        if (result.hasErrors()) {
+            return "addUser";
+        }
+>>>>>>> parent of 1c8d028 (prevent same user done)
         CourseUser user = new CourseUser(form.getUsername(), form.getPassword(),
                 form.getFullName(), form.getPhoneNumber(), form.getDeliveryAddress(), form.getRoles());
         courseUserRepo.save(user);
