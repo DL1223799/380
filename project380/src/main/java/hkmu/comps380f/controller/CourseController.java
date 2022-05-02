@@ -303,7 +303,7 @@ public class CourseController {
             String v = votes.get(i).getCourse().getSubject();
 //            String v = courseService.getCourses().get(cid - 1).getSubject();
             if (username.equals(votes.get(i).getUsername())) {
-                userPollings.add("Vote title: " + v + ": " + votes.get(i).getCourseId() + votes.get(i).getUsername() + votes.get(i).getOption());
+                userPollings.add("Vote title: " + v + ": " + votes.get(i).getCourseId() +" Voter : "+ votes.get(i).getUsername() + " Voted to :"+votes.get(i).getOption());
             }
 
         }
