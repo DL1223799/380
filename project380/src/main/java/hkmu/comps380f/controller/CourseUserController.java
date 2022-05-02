@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.Math;
+
 import javax.annotation.Resource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -254,7 +254,8 @@ public class CourseUserController {
         Course course = courseRepository.findById(courseId).orElse(null);
         CourseUser user = courseUserRepo.findById(principal.getName()).orElse(null);
         course.setOptions(courseUserOptionRepository.findByCourseId(courseId));
-        if (checkvote(pollingId,principal.getName() )) {
+        List<CourseUserOption> options = courseUserOptionRepository.findAll();
+        if (checkvote(pollingId, course.getLectureName())) {
             CourseUserPolling courseUserPolling = pollingRepository.findById(pollingId).orElse(null);
             CourseUserOption courseUserOption = new CourseUserOption();
             courseUserOption.setPolling(courseUserPolling);
@@ -264,8 +265,13 @@ public class CourseUserController {
             courseUserOption.setUser(user);
             course.addOption(courseUserOption);
 <<<<<<< HEAD
+<<<<<<< HEAD
             courseRepository.save(course);
+=======
+>>>>>>> parent of 53c1ad3 (vote filter finish)
         }
+        courseRepository.save(course);
+
         return "redirect:/course/view/" + courseId;
     }
 
@@ -292,17 +298,10 @@ public class CourseUserController {
 >>>>>>> parent of a606910 (register validation work)
     public boolean checkvote(long pollingId, String username) {
         List<CourseUserOption> options = courseUserOptionRepository.findAll();
-        int count = 0;
-        Long pollinid = pollingId;
-for(int i=0;i<options.size();i++){
-if (pollinid.equals(options.get(i).getPollingId())){
-if(options.get(i).getUsername().equals(username)){
-count+=1;
-}
-}}
-        if (count < 1) {
+        if (options.isEmpty()) {
             return true;
         } else {
+<<<<<<< HEAD
 <<<<<<< HEAD
             return false;
 =======
@@ -326,5 +325,15 @@ count+=1;
        return option;
       }
 >>>>>>> parent of a606910 (register validation work)
+=======
+            /**
+             * for (int i = 0; i < options.size(); i++) { if
+             * (options.get(i).getUsername().equals(username)
+             * &&(int)pollingId==(int)options.get(i).getPollingId()) { return
+             * false; } }*
+             */
+        }
+        return true;
+>>>>>>> parent of 53c1ad3 (vote filter finish)
     }
 
