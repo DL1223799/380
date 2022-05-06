@@ -24,3 +24,9 @@ INSERT INTO user_roles(username, role) VALUES ('john', 'ROLE_ADMIN');
 
 INSERT INTO users VALUES ('mary', '{noop}marypw','ouhk', '38026567', 'ouhk');
 INSERT INTO user_roles(username, role) VALUES ('mary', 'ROLE_USER');
+
+INSERT INTO users VALUES ('kelivin', '{noop}kelivinpw','ouhk', '38026567', 'ouhk');
+INSERT INTO user_roles(username, role) VALUES ('kelivin', 'ROLE_USER');
+
+INSERT INTO users VALUES ('david', '{noop}davidnpw','ouhk', '38026567', 'ouhk');
+INSERT INTO user_roles(username, role) VALUES ('david', 'ROLE_USER');
