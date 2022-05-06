@@ -23,7 +23,12 @@ Usernames and passowrds
 FEATURE
 -------
     
-Additional feature: 1,2,3,4
+Additional feature: 
+  1. Voting history page of a registered user 
+  2. Comment history page of a registered user 
+  3. Drag-and-Drop files 
+  4. Batch uploading of course materials
+  6. Storing course materials (files) to the Apache Derby 
   Necessary details for running feature 1: After the login page, the page will tell you the comment history in the comment.
   Necessary details for running feature 2: Using the admin/lecturer role, after clicking to the course view page, there is a "detail" button near the polling page. Click on the detail button to see the polling history.
   Necessary details for running feature 3: In the create course page, drag and drop the file into the "cloud" logo and the drag and drop to upload file area to upload the page.
