@@ -271,13 +271,16 @@ public class CourseController {
         }
         long voted=-1;
         List<CourseUserOption> votes = courseUserOptionRepository.findByPollingId(pollingId);
+        String choose=null;
         for (int i = 0; i < votes.size(); i++) {
             if (principal.getName().equals(votes.get(i).getUsername())) {
                 voted=votes.get(i).getId();
+                choose=votes.get(i).getOption();
             }
         }
         CourseUserOption option = new CourseUserOption();
         model.addAttribute("voted", voted);
+        model.addAttribute("choose", choose);
         model.addAttribute("courseDatabase", courseService.getCourses());
         model.addAttribute("course", course);
         model.addAttribute("polling", polling);
