@@ -39,8 +39,8 @@
                 <i>There are no polling in the system.</i>
             </c:when>
             <c:otherwise>
-                         <c:forEach items="${pollinginfos}" var="pollinginfo">
-                             <a href="<c:url value="/course/view/${Pcids[n]}" />">${n+1} Course:<c:out value="${pollinginfo}"/></a><br>                  
+                         <c:forEach items="${pollings}" var="polling">
+                             ${n+1} Course:${courseDatabase[polling.courseId-1].subject}<a href="<c:url value="/course/option/${polling.courseId}/${polling.id}" />"><c:out value="${polling.question}"/></a><br>                  
              <c:set var = "n" scope = "session" value = "${n+1}"/>
                 </c:forEach>
             </c:otherwise>
