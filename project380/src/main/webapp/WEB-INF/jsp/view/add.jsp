@@ -35,5 +35,6 @@
             <input type="submit" value="Log out" />
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
+ <a href="<c:url value="/course" />">Return to list courses</a>       
     </body>
 </html>

@@ -16,5 +16,6 @@
         <c:forEach items="${userComments}" var="userComment">
             ${userComment}<br>
         </c:forEach>
+            <button onclick="history.back()">Go Back</button>
     </body>
 </html>

@@ -12,9 +12,8 @@
 </security:authorize>
 <security:authorize access="hasRole('ADMIN')">            
     [<a href="<c:url value="/course/delete/${course.id}" />">Delete</a>]
-</security:authorize>
     [<a href="<c:url value="/course/polling/${course.id}" />">Create Polling of this course</a>]
-    [<a href="<c:url value="/course/option/${course.id}/1" />">Option</a>]
+</security:authorize>
 <br /><br />
 <i>Customer Name - <c:out value="${course.lectureName}" /></i><br /><br />
 <c:out value="${course.body}" /><br /><br />
@@ -60,8 +59,9 @@
                     <c:forEach items="${pollings}" var="polling">
                         <a href="<c:url value="/course/option/${course.id}/${polling.id}" />">${polling.question}</a>
                         <security:authorize access="hasRole('ADMIN')">
-                            <a href="<c:url value='/user/delete/${course.id}/Polling/${polling.id}' />" >[Delete]</a> total:${numboptions[n]} [<a href="<c:url value='/course/votehistory/${polling.id}'/>">Details</a>]
+                            <a href="<c:url value='/user/delete/${course.id}/Polling/${polling.id}' />" >[Delete]</a> total:${numboptions[n]} 
                         </security:authorize>
+                            [<a href="<c:url value='/course/votehistory/${polling.id}'/>">Details</a>]
                         <br/>
                         <c:set var = "n" scope = "session" value = "${n+1}"/>
                     </c:forEach>

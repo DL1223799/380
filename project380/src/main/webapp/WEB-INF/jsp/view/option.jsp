@@ -30,6 +30,6 @@
             
             <input type="submit"/><br/><br/><br/>
 </form:form>
-        
+            <a href="<c:url value="/course/view/${courseId}"/>">Return to course</a>
     </body>
 </html>

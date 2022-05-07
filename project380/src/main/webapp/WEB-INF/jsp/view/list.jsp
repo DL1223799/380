@@ -40,40 +40,25 @@
             </c:when>
             <c:otherwise>
                          <c:forEach items="${pollinginfos}" var="pollinginfo">
-                             ${n+1} Course:<c:out value="${pollinginfo}"/><br>                  
-                    <security:authorize access="hasRole('ADMIN')">
-                        [<a href="<c:url value="/edit/${courseDatabase[n].id}/Polling/${courseDatabase[n].id}" />">Edit</a>]
-                    </security:authorize>
-                    <security:authorize access="hasRole('ADMIN')">            
-                        [<a href="<c:url value="/delete/${courseDatabase[n].id}/Polling/${courseDatabase[n].id}" />">Delete</a>]
-                    </security:authorize>
-                    <br /><br />
+                             <a href="<c:url value="/course/view/${Pcids[n]}" />">${n+1} Course:<c:out value="${pollinginfo}"/></a><br>                  
              <c:set var = "n" scope = "session" value = "${n+1}"/>
                 </c:forEach>
             </c:otherwise>
         </c:choose>
-        <h2>Comment</h2>
+        <h2>Comment [<a href ="<c:url value ="/course/commenthistory" />">Comment History</a>]</h2>
         <c:set var = "n" scope = "session" value = "${0}"/>
         <c:choose>
             <c:when test="${empty Commentinfos}">
                 <i>There are no comment in the system.</i>
             </c:when>
             <c:otherwise>
-                [<a href ="<c:url value ="/course/commenthistory" />">Details</a>]
-                <br/>
                 <c:forEach items="${Commentinfos}" var="commentinfo">
-                    ${n+1} Course:<a href="<c:url value="/course/view/${courseDatabase[n].id}" />"><c:out value="${commentinfo}"/></a><br>                   
-                    <security:authorize access="hasRole('ADMIN')">
-                        [<a href="<c:url value="/edit/${courseDatabase[n].id}/Comment/${courseDatabase[n].id}" />">Edit</a>]
-                    </security:authorize>
-                    <security:authorize access="hasRole('ADMIN')">            
-                        [<a href="<c:url value="/delete/${courseDatabase[n].id}/Comment/${courseDatabase[n].id}" />">Delete</a>]
-                    </security:authorize>
-                    <br /><br />
+                    <a href="<c:url value="/course/view/${Ccids[n]}" />">${n+1} Course:<c:out value="${commentinfo}"/></a><br>                   
                     <c:set var = "n" scope = "session" value = "${n+1}"/>
                 </c:forEach>
             </c:otherwise>
         </c:choose>
+                    <br><br>  
         <security:authorize access="hasAnyRole('ADMIN','USER')">
             <c:url var="logoutUrl" value="/cslogout"/>
             <form action="${logoutUrl}" method="post">

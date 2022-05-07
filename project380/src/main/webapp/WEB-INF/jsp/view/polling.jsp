@@ -20,6 +20,7 @@
             <form:input path="d" /><br/><br/>
             <input type="submit" value="Add polling" />            
         </form:form>
+            <a href="<c:url value="/course/view/${courseId}"/>">Return to course</a>
         
         </body>
     </html>

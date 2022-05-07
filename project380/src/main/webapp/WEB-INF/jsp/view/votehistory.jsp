@@ -17,5 +17,6 @@
         <c:forEach items="${userPollings}" var="userPolling">
             ${userPolling}<br>
         </c:forEach>
+            <button onclick="history.back()">Go Back</button>
     </body>
 </html>

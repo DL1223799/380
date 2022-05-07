@@ -63,19 +63,27 @@ public class CourseController {
         List<CourseUserComment> comments = courseUserCommentRepository.findAll();
         List<CourseUserPolling> pollings = pollingRepository.findAll();
         List<String> pollinginfos = new ArrayList<String>();
+        List<Integer> Pcids = new ArrayList<Integer>();
+        List<Integer> Pids = new ArrayList<Integer>();
         for (int i = 0; i < pollings.size(); i++) {
             int pid = (int) pollings.get(i).getCourseId();
             String v = courseService.getCourses().get(pid - 1).getSubject();
             if (pollinginfos.indexOf(v) < 0) {
+                Pids.add(i+1);
+                Pcids.add(pid);
                 pollinginfos.add(v);
             }
 
         }
         List<String> Commentinfos = new ArrayList<String>();
+        List<Integer> Ccids = new ArrayList<Integer>();
+        List<Integer> Cids = new ArrayList<Integer>();
         for (int i = 0; i < comments.size(); i++) {
             int cid = (int) comments.get(i).getCourseId();
             String v = courseService.getCourses().get(cid - 1).getSubject();
             if (Commentinfos.indexOf(v) < 0) {
+                Cids.add(i+1);
+                Ccids.add(cid);
                 Commentinfos.add(v);
             }
 
@@ -84,6 +92,10 @@ public class CourseController {
         model.addAttribute("pollings", pollings);
         model.addAttribute("Commentinfos", Commentinfos);
         model.addAttribute("pollinginfos", pollinginfos);
+        model.addAttribute("Pcids", Pcids);
+        model.addAttribute("Ccids", Ccids);
+        model.addAttribute("Pids", Pids);
+        model.addAttribute("Cids", Cids);
         model.addAttribute("courseDatabase", courseService.getCourses());
         return "list";
     }
@@ -139,7 +151,7 @@ public class CourseController {
             return "redirect:/course/list";
         }
         List<CourseUserComment> comments = courseUserCommentRepository.findAll();
-        List<CourseUserPolling> pollings = pollingRepository.findAll();
+        List<CourseUserPolling> pollings = pollingRepository.findByCourseId(courseId);
         List<CourseUserOption> options = courseUserOptionRepository.findAll();
         List<Integer> numboptions = new ArrayList<Integer>();
 
@@ -244,6 +256,7 @@ public class CourseController {
         model.addAttribute("courseDatabase", courseService.getCourses());
         model.addAttribute("course", course);
         model.addAttribute("polling", polling);
+        model.addAttribute("courseId", courseId);
         model.addAttribute("newPolling", new PollingForm());
         return "polling";
     }
@@ -303,7 +316,7 @@ public class CourseController {
             String v = votes.get(i).getCourse().getSubject();
 //            String v = courseService.getCourses().get(cid - 1).getSubject();
             if (username.equals(votes.get(i).getUsername())) {
-                userPollings.add("Vote title: " + v + ": " + votes.get(i).getCourseId() +" Voter : "+ votes.get(i).getUsername() + " Voted to :"+votes.get(i).getOption());
+                userPollings.add("Vote no: " + v + ": " + (i+1) +" Voter : "+ votes.get(i).getUsername() + " Voted to :"+votes.get(i).getOption());
             }
 
         }
